@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CMH-SAVAR Medical Directory</title>
   <style>
+    /* Basic Styling */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
@@ -17,26 +18,44 @@
       color: white; 
       padding: 35px 15px; 
       text-align: center; 
-      font-size: 22px; 
+      font-size: 20px; 
       font-weight: bold;
       position: relative;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .about-btn {
+    /* Buttons in Header */
+    .header-btns {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: rgba(255,255,255,0.2);
+      display: flex;
+      gap: 6px;
+    }
+
+    .update-btn {
+      background: #4caf50;
       color: white;
       border: 1px solid white;
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 20px;
       font-size: 11px;
       cursor: pointer;
       font-weight: bold;
     }
 
+    .about-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Tabs Styling */
     .tabs { 
       background: #fff; 
       padding: 15px 10px; 
@@ -64,9 +83,9 @@
     .btn-all { background: #455a64; }
     .btn-male { background: #1565c0; }
     .btn-female { background: #c2185b; }
-
     .tab-buttons button.active { opacity: 1; transform: scale(1.02); }
 
+    /* Search Box */
     .search-box { 
       width: 92%; 
       margin: 15px auto; 
@@ -78,6 +97,7 @@
       outline: none;
     }
 
+    /* Contact Card Styling */
     .section-title { 
       padding: 12px 15px; 
       margin: 15px 10px 5px; 
@@ -111,11 +131,13 @@
       font-weight: bold;
     }
 
+    /* Call and WA Buttons */
     .btn-group { display: flex; gap: 8px; margin-top: 15px; }
     .btn-group button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; }
     .call-btn { background: #2e7d32; }
     .wa-btn { background: #25D366; }
 
+    /* About Modal */
     #aboutModal {
       display: none;
       position: fixed;
@@ -140,14 +162,19 @@
 
   <header>
     CMH-SAVAR DIRECTORY
-    <button class="about-btn" onclick="toggleAbout(true)">About</button>
+    <div class="header-btns">
+      <button class="update-btn" onclick="location.reload()">Update</button>
+      <button class="about-btn" onclick="toggleAbout(true)">About</button>
+    </div>
   </header>
 
+  <!-- Modal -->
   <div id="aboutModal">
     <div class="modal-content">
       <h3>Developer Information</h3>
       <p style="margin: 15px 0;"><b>Sergeant (MA) Md Mamun Or Rashid</b></p>
-      <p>WhatsApp: 01721148983</p>
+      <p>Emergency & Casualty Dept (E&CD)<br>CMH Savar</p>
+      <p style="margin-top: 10px;">WhatsApp: 01721148983</p>
       <button class="close-btn" onclick="toggleAbout(false)">Close</button>
     </div>
   </div>
@@ -168,7 +195,7 @@
     const state = {
       currentTab: 0,
       data: [
-        // Male List
+        // Male Personnel
         {army:"BJO-73300", rank:"SWO", name:"MD AKRAM HOSSAIN", phone:"01756192594", remarks:"SJCO", gender:"male"},
         {army:"BJO-73406", rank:"WO", name:"MD ASADUZZAMAN NUR", phone:"01731282701", remarks:"Ward MASTER", gender:"male"},
         {army:"2008637", rank:"SGT", name:"SAIDUR RAHMAN", phone:"01711930146", remarks:"CANTEEN NCO", gender:"male"},
@@ -206,10 +233,9 @@
         {army:"2015815", rank:"SNK", name:"WAHID ALI", phone:"01762356", remarks:"", gender:"male"},
         {army:"2015835", rank:"SNK", name:"SIAM SADIK SUMON", phone:"01635056692", remarks:"", gender:"male"},
         {army:"2015849", rank:"SNK", name:"MAIDUL ISLAM", phone:"01314155512", remarks:"", gender:"male"},
-        {army:"2015839", rank:"SNK", name:"OLIJA ISLAM MOU", phone:"01825440048", remarks:"", gender:"male"},
         {army:"2015929", rank:"SNK", name:"HABIBUR RAHMAN", phone:"01714596151", remarks:"", gender:"male"},
 
-        // Female List
+        // Female Personnel
         {army:"2012460", rank:"LCPL", name:"SHILPI KHATUN", phone:"01789486998", remarks:"", gender:"female"},
         {army:"2012477", rank:"LCPL", name:"TAHMINA", phone:"01776332951", remarks:"", gender:"female"},
         {army:"2012483", rank:"LCPL", name:"MONIRA", phone:"01632380161", remarks:"", gender:"female"},
@@ -220,7 +246,8 @@
         {army:"2015692", rank:"SNK", name:"LIMA AKTER", phone:"01926860092", remarks:"", gender:"female"},
         {army:"2012838", rank:"LCPL", name:"TANIA", phone:"01304591367", remarks:"", gender:"female"},
         {army:"2012810", rank:"LCPL", name:"KONA", phone:"01740764881", remarks:"", gender:"female"},
-        {army:"2012984", rank:"SNK", name:"FATEMA", phone:"01703360560", remarks:"", gender:"female"}
+        {army:"2012984", rank:"SNK", name:"FATEMA", phone:"01703360560", remarks:"", gender:"female"},
+        {army:"2015839", rank:"SNK", name:"OLIJA ISLAM MOU", phone:"01825440048", remarks:"", gender:"female"}
       ]
     };
 
@@ -279,23 +306,8 @@
 
     function toggleAbout(show) { document.getElementById('aboutModal').style.display = show ? 'block' : 'none'; }
 
+    // Initial load
     app.render(state.data);
   </script>
-  // অটোমেটিক আপডেট চেক করার জন্য ছোট স্ক্রিপ্ট
-window.addEventListener('load', function() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      registration.onupdatefound = function() {
-        const installingWorker = registration.installing;
-        installingWorker.onstatechange = function() {
-          if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            // নতুন আপডেট পাওয়া গেলে পেজ অটোমেটিক রিলোড হবে
-            window.location.reload();
-          }
-        };
-      };
-    });
-  }
-});
 </body>
 </html>
