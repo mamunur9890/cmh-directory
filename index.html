@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMH-SAVAR Medical Directory</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+      background: #f4f7f6; 
+      color: #333;
+    }
+    
+    header { 
+      background: linear-gradient(135deg, #0d47a1, #1976d2); 
+      color: white; 
+      padding: 35px 15px; 
+      text-align: center; 
+      font-size: 22px; 
+      font-weight: bold;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .about-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tabs { 
+      background: #fff; 
+      padding: 15px 10px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .tab-buttons { display: flex; gap: 8px; }
+
+    .tab-buttons button { 
+      flex: 1; 
+      padding: 12px 5px; 
+      border: none; 
+      border-radius: 8px; 
+      color: white; 
+      font-size: 14px; 
+      font-weight: bold; 
+      cursor: pointer;
+      opacity: 0.5;
+      transition: 0.3s;
+    }
+
+    .btn-all { background: #455a64; }
+    .btn-male { background: #1565c0; }
+    .btn-female { background: #c2185b; }
+
+    .tab-buttons button.active { opacity: 1; transform: scale(1.02); }
+
+    .search-box { 
+      width: 92%; 
+      margin: 15px auto; 
+      padding: 14px 20px; 
+      border-radius: 25px; 
+      border: 2px solid #ddd; 
+      font-size: 16px; 
+      display: block; 
+      outline: none;
+    }
+
+    .section-title { 
+      padding: 12px 15px; 
+      margin: 15px 10px 5px; 
+      font-weight: bold; 
+      font-size: 14px;
+      color: #555;
+      background: #e1e8ed;
+      border-radius: 5px;
+    }
+
+    .contact-card { 
+      background: white; 
+      margin: 10px; 
+      padding: 18px; 
+      border-radius: 12px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border-left: 5px solid #1976d2;
+    }
+    .card-female { border-left-color: #ec407a; }
+
+    .name { font-size: 18px; font-weight: bold; color: #0d47a1; margin-bottom: 6px; }
+    .info { font-size: 15px; color: #444; margin-bottom: 3px; }
+    .remarks { 
+      display: inline-block;
+      font-size: 11px; 
+      background: #fff9c4; 
+      color: #827717; 
+      padding: 2px 8px; 
+      border-radius: 4px; 
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .btn-group { display: flex; gap: 8px; margin-top: 15px; }
+    .btn-group button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; }
+    .call-btn { background: #2e7d32; }
+    .wa-btn { background: #25D366; }
+
+    #aboutModal {
+      display: none;
+      position: fixed;
+      z-index: 200;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+    }
+    .modal-content {
+      background: white;
+      margin: 20% auto;
+      padding: 25px;
+      border-radius: 15px;
+      width: 85%;
+      max-width: 350px;
+      text-align: center;
+    }
+    .close-btn { background: #eee; border: none; padding: 10px; width: 100%; margin-top: 20px; border-radius: 8px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <header>
+    CMH-SAVAR DIRECTORY
+    <button class="about-btn" onclick="toggleAbout(true)">About</button>
+  </header>
+
+  <div id="aboutModal">
+    <div class="modal-content">
+      <h3>Developer Information</h3>
+      <p style="margin: 15px 0;"><b>Sergeant (MA) Md Mamun Or Rashid</b></p>
+      <p>WhatsApp: 01721148983</p>
+      <button class="close-btn" onclick="toggleAbout(false)">Close</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="btn-all active" onclick="changeTab(0)">All</button>
+      <button class="btn-male" onclick="changeTab(1)">Male</button>
+      <button class="btn-female" onclick="changeTab(2)">Female</button>
+    </div>
+  </div>
+
+  <input type="text" id="search" class="search-box" placeholder="Search by name or army number..." onkeyup="app.filter()">
+
+  <div id="list"></div>
+
+  <script>
+    const state = {
+      currentTab: 0,
+      data: [
+        // Male List
+        {army:"BJO-73300", rank:"SWO", name:"MD AKRAM HOSSAIN", phone:"01756192594", remarks:"SJCO", gender:"male"},
+        {army:"BJO-73406", rank:"WO", name:"MD ASADUZZAMAN NUR", phone:"01731282701", remarks:"Ward MASTER", gender:"male"},
+        {army:"2008637", rank:"SGT", name:"SAIDUR RAHMAN", phone:"01711930146", remarks:"CANTEEN NCO", gender:"male"},
+        {army:"2008639", rank:"SGT", name:"NAZRUL ISLAM", phone:"01714779142", remarks:"", gender:"male"},
+        {army:"2008956", rank:"SGT", name:"MD HASAN AL MAMUN", phone:"01917662742", remarks:"E&CD In charge", gender:"male"},
+        {army:"2009300", rank:"SGT", name:"HOMAYUN", phone:"01769097347", remarks:"SURG WD In charge", gender:"male"},
+        {army:"2009461", rank:"SGT", name:"ABDULLAH AL MAMUN", phone:"01725340950", remarks:"W/M OFFICE", gender:"male"},
+        {army:"2009824", rank:"SGT", name:"MOSTOFA", phone:"01913385965", remarks:"CSM", gender:"male"},
+        {army:"2009890", rank:"SGT", name:"MD MAMUN OR RASHID", phone:"01721148983", remarks:"W/M OFFICE", gender:"male"},
+        {army:"2009475", rank:"CPL", name:"MD AKUL HOSSAIN", phone:"01764128559", remarks:"HDU", gender:"male"},
+        {army:"2010318", rank:"CPL", name:"ARIF", phone:"01872303600", remarks:"PHARMACY", gender:"male"},
+        {army:"2010595", rank:"CPL", name:"MD DELOWAR", phone:"01727803352", remarks:"MED WD", gender:"male"},
+        {army:"2011239", rank:"CPL", name:"ASHRAFUL", phone:"01738695454", remarks:"", gender:"male"},
+        {army:"2010589", rank:"SNK", name:"MONIR HOSSEN-1", phone:"01732957057", remarks:"FD MESS", gender:"male"},
+        {army:"2011021", rank:"LCPL", name:"MD HABIBUR RAHMAN", phone:"01301546590", remarks:"Medical Store", gender:"male"},
+        {army:"2013918", rank:"SNK", name:"RIMON", phone:"01871951522", remarks:"T/D", gender:"male"},
+        {army:"2013978", rank:"SNK", name:"AMIRUL", phone:"01789975947", remarks:"", gender:"male"},
+        {army:"2013981", rank:"SNK", name:"MOSAROF", phone:"01780517839", remarks:"", gender:"male"},
+        {army:"2013984", rank:"SNK", name:"RAIHAN", phone:"01964606184", remarks:"COMDT RANNAR", gender:"male"},
+        {army:"2013988", rank:"SNK", name:"FAHIM", phone:"01876445393", remarks:"", gender:"male"},
+        {army:"2014069", rank:"SNK", name:"MONIR-2", phone:"01646344328", remarks:"", gender:"male"},
+        {army:"2014093", rank:"SNK", name:"SHAHANUR", phone:"01313648341", remarks:"", gender:"male"},
+        {army:"2014098", rank:"SNK", name:"SHAWON", phone:"01794653434", remarks:"", gender:"male"},
+        {army:"2014128", rank:"SNK", name:"BIPLOB", phone:"01311887560", remarks:"COY MUNSI", gender:"male"},
+        {army:"2014175", rank:"SNK", name:"HRIDOY", phone:"01604357682", remarks:"", gender:"male"},
+        {army:"2014238", rank:"SNK", name:"JUWEL", phone:"01720350866", remarks:"", gender:"male"},
+        {army:"2014409", rank:"SNK", name:"RAKIBUL HASAN", phone:"01916880026", remarks:"TEMP ATT", gender:"male"},
+        {army:"2015468", rank:"SNK", name:"MD MARUF HOSSAIN", phone:"01763041633", remarks:"", gender:"male"},
+        {army:"2015697", rank:"SNK", name:"MD RONI ALI", phone:"01605656592", remarks:"", gender:"male"},
+        {army:"2015713", rank:"SNK", name:"SHARIFUL ISLAM", phone:"01943753516", remarks:"", gender:"male"},
+        {army:"2015721", rank:"SNK", name:"NAZMUL HUDA RABBANI", phone:"01608530441", remarks:"", gender:"male"},
+        {army:"2015730", rank:"SNK", name:"TAIJUL ISLAM", phone:"01319471596", remarks:"", gender:"male"},
+        {army:"2015808", rank:"SNK", name:"MAHBUB HOSSEN SHORDAR", phone:"01603646616", remarks:"", gender:"male"},
+        {army:"2015812", rank:"SNK", name:"ISRAFIL", phone:"01743894189", remarks:"", gender:"male"},
+        {army:"2015815", rank:"SNK", name:"WAHID ALI", phone:"01762356", remarks:"", gender:"male"},
+        {army:"2015835", rank:"SNK", name:"SIAM SADIK SUMON", phone:"01635056692", remarks:"", gender:"male"},
+        {army:"2015849", rank:"SNK", name:"MAIDUL ISLAM", phone:"01314155512", remarks:"", gender:"male"},
+        {army:"2015839", rank:"SNK", name:"OLIJA ISLAM MOU", phone:"01825440048", remarks:"", gender:"male"},
+        {army:"2015929", rank:"SNK", name:"HABIBUR RAHMAN", phone:"01714596151", remarks:"", gender:"male"},
+
+        // Female List
+        {army:"2012460", rank:"LCPL", name:"SHILPI KHATUN", phone:"01789486998", remarks:"", gender:"female"},
+        {army:"2012477", rank:"LCPL", name:"TAHMINA", phone:"01776332951", remarks:"", gender:"female"},
+        {army:"2012483", rank:"LCPL", name:"MONIRA", phone:"01632380161", remarks:"", gender:"female"},
+        {army:"2012578", rank:"LCPL", name:"PAPIA SULTANA", phone:"01706128160", remarks:"", gender:"female"},
+        {army:"2012647", rank:"LCPL", name:"NAZMUN NAHAR", phone:"01709183427", remarks:"", gender:"female"},
+        {army:"2012839", rank:"LCPL", name:"SAFINAZ", phone:"0185444059", remarks:"", gender:"female"},
+        {army:"2012848", rank:"LCPL", name:"MONIKA RANI SAHA", phone:"01709200355", remarks:"", gender:"female"},
+        {army:"2015692", rank:"SNK", name:"LIMA AKTER", phone:"01926860092", remarks:"", gender:"female"},
+        {army:"2012838", rank:"LCPL", name:"TANIA", phone:"01304591367", remarks:"", gender:"female"},
+        {army:"2012810", rank:"LCPL", name:"KONA", phone:"01740764881", remarks:"", gender:"female"},
+        {army:"2012984", rank:"SNK", name:"FATEMA", phone:"01703360560", remarks:"", gender:"female"}
+      ]
+    };
+
+    const app = {
+      filter: function() {
+        const term = document.getElementById('search').value.toLowerCase();
+        let filtered = state.data;
+        if (state.currentTab === 1) filtered = filtered.filter(c => c.gender === 'male');
+        if (state.currentTab === 2) filtered = filtered.filter(c => c.gender === 'female');
+        
+        filtered = filtered.filter(c => 
+          c.name.toLowerCase().includes(term) ||
+          c.army.toLowerCase().includes(term) ||
+          c.phone.includes(term)
+        );
+        this.render(filtered);
+      },
+
+      render: function(list) {
+        const container = document.getElementById('list');
+        let html = '';
+        const male = list.filter(c => c.gender === 'male');
+        const female = list.filter(c => c.gender === 'female');
+
+        if(male.length > 0) {
+          html += `<div class="section-title">MALE PERSONNEL (${male.length})</div>`;
+          male.forEach(c => html += this.cardTemplate(c));
+        }
+        if(female.length > 0) {
+          html += `<div class="section-title">FEMALE PERSONNEL (${female.length})</div>`;
+          female.forEach(c => html += this.cardTemplate(c));
+        }
+        container.innerHTML = html || '<p style="text-align:center; padding:30px;">No records found</p>';
+      },
+
+      cardTemplate: function(c) {
+        return `
+          <div class="contact-card ${c.gender === 'female' ? 'card-female' : ''}">
+            <div class="name">${c.rank} ${c.name}</div>
+            <div class="info">Army No: ${c.army || 'N/A'}</div>
+            <div class="info">Mobile: ${c.phone}</div>
+            ${c.remarks ? `<div class="remarks">${c.remarks}</div>` : ''}
+            <div class="btn-group">
+              <button class="call-btn" onclick="window.location.href='tel:${c.phone}'">Call</button>
+              <button class="wa-btn" onclick="window.open('https://wa.me/88${c.phone.replace(/-/g,'')}')">WhatsApp</button>
+            </div>
+          </div>`;
+      }
+    };
+
+    function changeTab(i) {
+      state.currentTab = i;
+      document.querySelectorAll('.tab-buttons button').forEach((b, idx) => b.classList.toggle('active', idx === i));
+      app.filter();
+    }
+
+    function toggleAbout(show) { document.getElementById('aboutModal').style.display = show ? 'block' : 'none'; }
+
+    app.render(state.data);
+  </script>
+</body>
+</html>
