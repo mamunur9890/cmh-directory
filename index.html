@@ -281,5 +281,21 @@
 
     app.render(state.data);
   </script>
+  // অটোমেটিক আপডেট চেক করার জন্য ছোট স্ক্রিপ্ট
+window.addEventListener('load', function() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      registration.onupdatefound = function() {
+        const installingWorker = registration.installing;
+        installingWorker.onstatechange = function() {
+          if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // নতুন আপডেট পাওয়া গেলে পেজ অটোমেটিক রিলোড হবে
+            window.location.reload();
+          }
+        };
+      };
+    });
+  }
+});
 </body>
 </html>
