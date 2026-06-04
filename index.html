@@ -3,164 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMH Savar | Medical Section</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <title>CMH-SAVAR Medical SECTION</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    /* Basic Styling */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+      background: #f4f7f6; 
+      color: #333;
+    }
     
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+    header { 
+      background: linear-gradient(135deg, #0d47a1, #1976d2); 
+      color: white; 
+      padding: 35px 15px; 
+      text-align: center; 
+      font-size: 20px; 
+      font-weight: bold;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .header-gradient {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
-      box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5);
+    /* Buttons in Header */
+    .header-btns {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 6px;
     }
 
-    .glass {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.6);
+    .update-btn {
+      background: #4caf50;
+      color: white;
+      border: 1px solid white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
-    .card-3d {
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 
-        0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -4px rgba(0, 0, 0, 0.1),
-        inset 0 -4px 6px -2px rgba(255,255,255,0.7),
-        inset 0 4px 6px -2px rgba(0,0,0,0.1);
+    .about-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
-    .card-3d:hover {
-      transform: translateY(-12px) scale(1.03) perspective(1000px) rotateX(8deg);
-      box-shadow: 
-        0 25px 50px -12px rgba(0, 0, 0, 0.25),
-        0 10px 15px -3px rgba(59, 130, 246, 0.3);
+    /* Tabs Styling */
+    .tabs { 
+      background: #fff; 
+      padding: 15px 10px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    .tab-active {
+    .tab-buttons { display: flex; gap: 8px; }
+
+    .tab-buttons button { 
+      flex: 1; 
+      padding: 12px 5px; 
+      border: none; 
+      border-radius: 8px; 
+      color: white; 
+      font-size: 14px; 
+      font-weight: bold; 
+      cursor: pointer;
+      opacity: 0.5;
+      transition: 0.3s;
+    }
+
+    .btn-all { background: #455a64; }
+    .btn-male { background: #1565c0; }
+    .btn-female { background: #c2185b; }
+    .tab-buttons button.active { opacity: 1; transform: scale(1.02); }
+
+    /* Search Box */
+    .search-box { 
+      width: 92%; 
+      margin: 15px auto; 
+      padding: 14px 20px; 
+      border-radius: 25px; 
+      border: 2px solid #ddd; 
+      font-size: 16px; 
+      display: block; 
+      outline: none;
+    }
+
+    /* Contact Card Styling */
+    .section-title { 
+      padding: 12px 15px; 
+      margin: 15px 10px 5px; 
+      font-weight: bold; 
+      font-size: 14px;
+      color: #555;
+      background: #e1e8ed;
+      border-radius: 5px;
+    }
+
+    .contact-card { 
+      background: white; 
+      margin: 10px; 
+      padding: 18px; 
+      border-radius: 12px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border-left: 5px solid #1976d2;
+    }
+    .card-female { border-left-color: #ec407a; }
+
+    .name { font-size: 18px; font-weight: bold; color: #0d47a1; margin-bottom: 6px; }
+    .info { font-size: 15px; color: #444; margin-bottom: 3px; }
+    .remarks { 
+      display: inline-block;
+      font-size: 11px; 
+      background: #fff9c4; 
+      color: #827717; 
+      padding: 2px 8px; 
+      border-radius: 4px; 
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    /* Call and WA Buttons */
+    .btn-group { display: flex; gap: 8px; margin-top: 15px; }
+    .btn-group button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; }
+    .call-btn { background: #2e7d32; }
+    .wa-btn { background: #25D366; }
+
+    /* About Modal */
+    #aboutModal {
+      display: none;
+      position: fixed;
+      z-index: 200;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+    }
+    .modal-content {
       background: white;
-      color: #1e40af;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15),
-                  inset 0 -4px 8px rgba(255,255,255,0.8);
-      transform: translateY(-3px);
+      margin: 20% auto;
+      padding: 25px;
+      border-radius: 15px;
+      width: 85%;
+      max-width: 350px;
+      text-align: center;
     }
-
-    .btn-3d {
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 0 #166534;
-    }
-    
-    .btn-3d:active {
-      transform: translateY(4px);
-      box-shadow: 0 0 0 #166534;
-    }
-
-    .search-input {
-      box-shadow: inset 0 4px 8px rgba(0,0,0,0.05),
-                  0 4px 15px rgba(59, 130, 246, 0.15);
-    }
+    .close-btn { background: #eee; border: none; padding: 10px; width: 100%; margin-top: 20px; border-radius: 8px; font-weight: bold; cursor: pointer;}
   </style>
 </head>
-<body class="min-h-screen pb-12">
+<body>
 
-  <!-- Header -->
-  <header class="header-gradient text-white shadow-2xl sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner">🏥</div>
-        <div>
-          <h1 class="text-3xl font-bold tracking-tighter">CMH SAVAR</h1>
-          <p class="text-blue-100 text-sm -mt-1">Medical Section • Directory</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <button onclick="location.reload()" 
-                class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-5 py-3 rounded-2xl text-sm font-medium transition">
-          <i class="fas fa-sync-alt"></i>
-          <span>Refresh</span>
-        </button>
-        <button onclick="toggleAbout()" 
-                class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-5 py-3 rounded-2xl text-sm font-medium transition">
-          <i class="fas fa-info-circle"></i>
-        </button>
-      </div>
+  <header>
+    CMH-SAVAR MEDICAL SECTION
+    <div class="header-btns">
+      <button class="update-btn" onclick="location.reload()">Update</button>
+      <button class="about-btn" onclick="toggleAbout(true)">About</button>
     </div>
   </header>
 
-  <div class="max-w-5xl mx-auto px-6 pt-8">
-
-    <!-- Tabs -->
-    <div class="glass rounded-3xl p-2 shadow-xl flex mb-8">
-      <button onclick="changeTab(0)" id="tab0"
-              class="flex-1 py-5 rounded-3xl font-semibold text-base transition-all tab-active">
-        All Personnel
-      </button>
-      <button onclick="changeTab(1)" id="tab1"
-              class="flex-1 py-5 rounded-3xl font-semibold text-base transition-all flex items-center justify-center gap-2">
-        <i class="fas fa-male"></i> Male
-      </button>
-      <button onclick="changeTab(2)" id="tab2"
-              class="flex-1 py-5 rounded-3xl font-semibold text-base transition-all flex items-center justify-center gap-2">
-        <i class="fas fa-female"></i> Female
-      </button>
-    </div>
-
-    <!-- Search -->
-    <div class="relative mb-10">
-      <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none text-gray-400">
-        <i class="fas fa-search text-xl"></i>
+  <div id="aboutModal">
+    <div class="modal-content">
+      <h3>Developer Information</h3>
+      <p style="margin: 15px 0;"><b>Sergeant (MA) Md Mamun Or Rashid</b></p>
+      <p>Ward Master Office <br>CMH Savar</p>
+      
+      <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+        <a href="tel:01721148983" style="text-decoration: none; background: #2e7d32; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px;">📞 Call: 01721148983</a>
+        <a href="https://wa.me/8801721148983" target="_blank" style="text-decoration: none; background: #25D366; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px;">💬 WhatsApp</a>
       </div>
-      <input 
-        type="text" 
-        id="search"
-        onkeyup="filterData()"
-        placeholder="Search name, army number or phone..."
-        class="search-input w-full bg-white border border-gray-100 focus:border-blue-400 rounded-3xl pl-14 py-6 text-lg outline-none transition-all text-gray-800 placeholder-gray-400"
-      >
-    </div>
 
-    <!-- Results -->
-    <div id="list" class="space-y-6"></div>
+      <button class="close-btn" onclick="toggleAbout(false)">Close</button>
+    </div>
   </div>
 
-  <!-- About Modal -->
-  <div id="aboutModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xl z-[100] flex items-center justify-center">
-    <div class="glass max-w-md w-full mx-4 rounded-3xl shadow-2xl overflow-hidden">
-      <div class="p-8 text-center">
-        <div class="mx-auto w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-4xl mb-6">👨‍⚕️</div>
-        <h3 class="text-2xl font-bold text-gray-800">CMH Savar Medical Section</h3>
-        <p class="text-gray-600 mt-1">Internal Personnel Directory</p>
-        
-        <div class="my-8 bg-white/70 rounded-2xl p-6 text-left border border-white">
-          <p class="font-semibold text-gray-700">Developed by:</p>
-          <p class="text-xl font-bold text-gray-900">Sergeant (MA) Md Mamun Or Rashid</p>
-          <p class="text-gray-600">Ward Master Office, CMH Savar</p>
-        </div>
-
-        <div class="space-y-4">
-          <a href="tel:01721148983" class="btn-3d flex items-center justify-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-3xl font-semibold text-lg active:scale-95">
-            <i class="fas fa-phone"></i> Call Developer
-          </a>
-          <a href="https://wa.me/8801721148983" target="_blank" class="btn-3d flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20b557] text-white py-5 rounded-3xl font-semibold text-lg active:scale-95">
-            <i class="fab fa-whatsapp"></i> WhatsApp
-          </a>
-        </div>
-      </div>
-      <button onclick="toggleAbout()" class="w-full py-6 text-gray-500 font-medium border-t hover:bg-white/50 transition">
-        Close
-      </button>
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="btn-all active" onclick="changeTab(0)">All</button>
+      <button class="btn-male" onclick="changeTab(1)">Male</button>
+      <button class="btn-female" onclick="changeTab(2)">Female</button>
     </div>
   </div>
+
+  <input type="text" id="search" class="search-box" placeholder="Search by name or army number..." onkeyup="app.filter()">
+
+  <div id="list"></div>
 
   <script>
     const state = {
       currentTab: 0,
       data: [
-        // Male Personnel (all your data)
+        // Male Personnel
         {army:"BJO-73300", rank:"SWO", name:"MD AKRAM HOSSAIN", phone:"01756192594", remarks:"SJCO", gender:"male"},
         {army:"BJO-73359", rank:"WO", name:"MD AMINUL ISLAM", phone:"01718913391", remarks:"", gender:"male"},
         {army:"BJO-73406", rank:"WO", name:"MD ASADUZZAMAN NUR", phone:"01731282701", remarks:"WARD MASTER", gender:"male"},
@@ -211,7 +250,6 @@
         {army:"2016416", rank:"SNK", name:"MD MAHMUDUL HAQUE", phone:"01830416642", remarks:"", gender:"male"},
         {army:"2016458", rank:"SNK", name:"YOUSUF ALI", phone:"01956976318", remarks:"", gender:"male"},
         {army:"2016532", rank:"SNK", name:"ASHIQUE HOSSAIN", phone:"01971978926", remarks:"", gender:"male"},
-
         // Female Personnel
         {army:"2012460", rank:"LCPL", name:"SHILPI KHATUN", phone:"01789486998", remarks:"", gender:"female"},
         {army:"2012477", rank:"LCPL", name:"TAHMINA", phone:"01776332951", remarks:"", gender:"female"},
@@ -233,91 +271,65 @@
       ]
     };
 
-    function filterData() {
-      const term = document.getElementById('search').value.toLowerCase().trim();
-      let filtered = state.data;
-
-      if (state.currentTab === 1) filtered = filtered.filter(c => c.gender === 'male');
-      if (state.currentTab === 2) filtered = filtered.filter(c => c.gender === 'female');
-
-      if (term) {
-        filtered = filtered.filter(c =>
+    const app = {
+      filter: function() {
+        const term = document.getElementById('search').value.toLowerCase().trim();
+        let filtered = state.data;
+        if (state.currentTab === 1) filtered = filtered.filter(c => c.gender === 'male');
+        if (state.currentTab === 2) filtered = filtered.filter(c => c.gender === 'female');
+        
+        filtered = filtered.filter(c => 
           c.name.toLowerCase().includes(term) ||
-          (c.army && c.army.toLowerCase().includes(term)) ||
+          c.army.toLowerCase().includes(term) ||
           c.phone.includes(term)
         );
-      }
+        this.render(filtered);
+      },
 
-      renderList(filtered);
-    }
+      render: function(list) {
+        const container = document.getElementById('list');
+        let html = '';
+        const male = list.filter(c => c.gender === 'male');
+        const female = list.filter(c => c.gender === 'female');
 
-    function renderList(list) {
-      const container = document.getElementById('list');
-      let html = '';
+        if(male.length > 0) {
+          html += `<div class="section-title">MALE PERSONNEL (${male.length})</div>`;
+          male.forEach(c => html += this.cardTemplate(c));
+        }
+        if(female.length > 0) {
+          html += `<div class="section-title">FEMALE PERSONNEL (${female.length})</div>`;
+          female.forEach(c => html += this.cardTemplate(c));
+        }
+        container.innerHTML = html || '<p style="text-align:center; padding:30px;">No records found</p>';
+      },
 
-      const males = list.filter(c => c.gender === 'male');
-      const females = list.filter(c => c.gender === 'female');
-
-      if (males.length > 0) {
-        html += `<div class="flex items-center gap-4 mb-6"><div class="text-4xl">👨</div><h2 class="text-2xl font-bold text-gray-800">Male Personnel (${males.length})</h2></div>`;
-        males.forEach(p => html += createCard(p));
-      }
-
-      if (females.length > 0) {
-        html += `<div class="flex items-center gap-4 mb-6 mt-12"><div class="text-4xl">👩</div><h2 class="text-2xl font-bold text-gray-800">Female Personnel (${females.length})</h2></div>`;
-        females.forEach(p => html += createCard(p));
-      }
-
-      container.innerHTML = html || `
-        <div class="text-center py-24">
-          <i class="fas fa-user-slash text-6xl text-gray-300 mb-4"></i>
-          <p class="text-2xl text-gray-400">No records found</p>
-        </div>`;
-    }
-
-    function createCard(c) {
-      return `
-        <div class="card-3d bg-white rounded-3xl overflow-hidden border border-white/60">
-          <div class="p-7">
-            <div class="flex justify-between">
-              <div>
-                <span class="inline-block px-4 py-1 text-xs font-bold tracking-widest bg-blue-100 text-blue-700 rounded-2xl">${c.rank}</span>
-                <h3 class="text-2xl font-bold text-gray-900 mt-3">${c.name}</h3>
-                <p class="text-gray-500 font-mono mt-1">Army No: ${c.army}</p>
-              </div>
-              <div class="${c.gender === 'female' ? 'bg-pink-100 text-pink-600' : 'bg-blue-100 text-blue-600'} w-11 h-11 flex items-center justify-center rounded-2xl text-2xl shadow-inner">
-                ${c.gender === 'female' ? '♀' : '♂'}
-              </div>
+      cardTemplate: function(c) {
+        return `
+          <div class="contact-card ${c.gender === 'female' ? 'card-female' : ''}">
+            <div class="name">${c.rank} ${c.name}</div>
+            <div class="info">Army No: ${c.army || 'N/A'}</div>
+            <div class="info">Mobile: ${c.phone}</div>
+            ${c.remarks.trim() ? `<div class="remarks">${c.remarks}</div>` : ''}
+            <div class="btn-group">
+              <button class="call-btn" onclick="window.location.href='tel:${c.phone}'">Call</button>
+              <button class="wa-btn" onclick="window.open('https://wa.me/88${c.phone.replace(/[^0-9]/g,'')}')">WhatsApp</button>
             </div>
+          </div>`;
+      }
+    };
 
-            ${c.remarks ? `<div class="mt-4 inline-flex items-center gap-2 bg-amber-100 text-amber-700 text-sm font-bold px-5 py-2.5 rounded-2xl">${c.remarks}</div>` : ''}
-
-            <div class="mt-8 grid grid-cols-2 gap-4">
-              <a href="tel:${c.phone}" class="btn-3d col-span-1 bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-3xl font-semibold flex items-center justify-center gap-3 text-lg active:scale-95">
-                <i class="fas fa-phone"></i> Call
-              </a>
-              <a href="https://wa.me/88${c.phone.replace(/[^0-9]/g,'')}" target="_blank" class="btn-3d col-span-1 bg-[#25D366] hover:bg-[#20b557] text-white py-5 rounded-3xl font-semibold flex items-center justify-center gap-3 text-lg active:scale-95">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>`;
+    function changeTab(i) {
+      state.currentTab = i;
+      document.querySelectorAll('.tab-buttons button').forEach((b, idx) => b.classList.toggle('active', idx === i));
+      app.filter();
     }
 
-    function changeTab(tab) {
-      state.currentTab = tab;
-      document.querySelectorAll('#tab0, #tab1, #tab2').forEach((el, i) => {
-        el.classList.toggle('tab-active', i === tab);
-      });
-      filterData();
+    function toggleAbout(show) { 
+      document.getElementById('aboutModal').style.display = show ? 'block' : 'none'; 
     }
 
-    function toggleAbout() {
-      document.getElementById('aboutModal').classList.toggle('hidden');
-    }
-
-    // Init
-    window.onload = () => renderList(state.data);
+    // Initial load
+    app.render(state.data);
   </script>
 </body>
 </html>
