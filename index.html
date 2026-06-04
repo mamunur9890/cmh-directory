@@ -3,195 +3,429 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMH-SAVAR Medical SECTION</title>
+  <title>CMH-Savar Medical Section - 3D Dashboard</title>
   <style>
-    /* Basic Styling */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-      background: #f4f7f6; 
-      color: #333;
+    /* --- Modern Reset & Core Tokens --- */
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent;
     }
     
-    header { 
-      background: linear-gradient(135deg, #0d47a1, #1976d2); 
-      color: white; 
-      padding: 35px 15px; 
-      text-align: center; 
-      font-size: 20px; 
-      font-weight: bold;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --card-male-bg: rgba(30, 41, 59, 0.7);
+      --card-male-border: rgba(56, 189, 248, 0.2);
+      --card-female-bg: rgba(30, 41, 59, 0.7);
+      --card-female-border: rgba(244, 63, 94, 0.2);
+      
+      --accent-male: #0ea5e9;
+      --accent-female: #f43f5e;
+      
+      --glass-bg: rgba(15, 23, 42, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      
+      --neon-glow-male: 0 0 15px rgba(14, 165, 233, 0.15);
+      --neon-glow-female: 0 0 15px rgba(244, 63, 94, 0.15);
+      --shadow-3d: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
     }
 
-    /* Buttons in Header */
+    body { 
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+      background: var(--bg-gradient); 
+      color: #f8fafc;
+      min-height: 100vh;
+      padding-bottom: 40px;
+      overflow-x: hidden;
+      perspective: 1000px; /* Activates 3D workspace */
+    }
+
+    /* --- Futuristic Header --- */
+    header { 
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 25px 20px; 
+      text-align: center; 
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #38bdf8 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(56, 189, 248, 0.2);
+    }
+
     .header-btns {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 15px;
       display: flex;
-      gap: 6px;
+      gap: 10px;
     }
 
-    .update-btn {
-      background: #4caf50;
-      color: white;
-      border: 1px solid white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 11px;
+    .header-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+      border: 1px solid var(--glass-border);
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-size: 12px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .header-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .update-btn-3d {
+      border-color: rgba(76, 175, 80, 0.4);
+      color: #4caf50;
     }
 
-    .about-btn {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      cursor: pointer;
-      font-weight: bold;
+    /* --- Interactive App Controls CONTAINER --- */
+    .app-controls {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 15px;
     }
 
-    /* Tabs Styling */
-    .tabs { 
-      background: #fff; 
-      padding: 15px 10px; 
-      position: sticky; 
-      top: 0; 
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    /* --- Glassmorphic Search --- */
+    .search-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .search-box { 
+      width: 100%; 
+      padding: 16px 25px; 
+      border-radius: 16px; 
+      border: 1px solid var(--glass-border); 
+      background: rgba(30, 41, 59, 0.5);
+      color: #fff;
+      font-size: 16px; 
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    .search-box:focus {
+      border-color: var(--accent-male);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 0 15px rgba(14, 165, 233, 0.3);
+      background: rgba(30, 41, 59, 0.8);
     }
 
-    .tab-buttons { display: flex; gap: 8px; }
-
+    /* --- Neomorphic Layered Tabs --- */
+    .tab-container {
+      background: rgba(15, 23, 42, 0.4);
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+    }
+    .tab-buttons { display: flex; gap: 6px; }
     .tab-buttons button { 
       flex: 1; 
-      padding: 12px 5px; 
+      padding: 12px 10px; 
       border: none; 
-      border-radius: 8px; 
-      color: white; 
+      border-radius: 10px; 
+      color: #94a3b8; 
       font-size: 14px; 
-      font-weight: bold; 
+      font-weight: 700; 
       cursor: pointer;
-      opacity: 0.5;
-      transition: 0.3s;
+      background: transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tab-buttons button.active { 
+      color: #fff;
+      background: #1e293b;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+      transform: translateY(-1px);
+    }
+    .tab-buttons button.active.btn-all { border-bottom: 2px solid #64748b; }
+    .tab-buttons button.active.btn-male { border-bottom: 2px solid var(--accent-male); color: #38bdf8; }
+    .tab-buttons button.active.btn-female { border-bottom: 2px solid var(--accent-female); color: #fb7185; }
+
+    /* --- Dynamic Main Content List --- */
+    #list {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 15px;
     }
 
-    .btn-all { background: #455a64; }
-    .btn-male { background: #1565c0; }
-    .btn-female { background: #c2185b; }
-    .tab-buttons button.active { opacity: 1; transform: scale(1.02); }
-
-    /* Search Box */
-    .search-box { 
-      width: 92%; 
-      margin: 15px auto; 
-      padding: 14px 20px; 
-      border-radius: 25px; 
-      border: 2px solid #ddd; 
-      font-size: 16px; 
-      display: block; 
-      outline: none;
-    }
-
-    /* Contact Card Styling */
     .section-title { 
-      padding: 12px 15px; 
-      margin: 15px 10px 5px; 
-      font-weight: bold; 
-      font-size: 14px;
-      color: #555;
-      background: #e1e8ed;
-      border-radius: 5px;
+      padding: 10px 5px; 
+      margin: 30px 0 10px; 
+      font-weight: 800; 
+      font-size: 13px;
+      color: #94a3b8;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.05);
     }
 
+    /* --- Advanced 3D Contact Cards --- */
     .contact-card { 
-      background: white; 
-      margin: 10px; 
-      padding: 18px; 
-      border-radius: 12px; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-      border-left: 5px solid #1976d2;
+      background: var(--card-male-bg); 
+      margin-bottom: 16px; 
+      padding: 22px; 
+      border-radius: 20px; 
+      border: 1px solid var(--card-male-border);
+      box-shadow: var(--shadow-3d);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+      transform-style: preserve-3d;
+      position: relative;
     }
-    .card-female { border-left-color: #ec407a; }
+    .contact-card:hover {
+      transform: translateY(-5px) rotateX(2deg) rotateY(1deg);
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), var(--neon-glow-male);
+    }
 
-    .name { font-size: 18px; font-weight: bold; color: #0d47a1; margin-bottom: 6px; }
-    .info { font-size: 15px; color: #444; margin-bottom: 3px; }
+    /* Female Specific Card Adjustments */
+    .card-female { 
+      background: var(--card-female-bg);
+      border-color: var(--card-female-border);
+    }
+    .card-female:hover {
+      border-color: rgba(244, 63, 94, 0.5);
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), var(--neon-glow-female);
+    }
+
+    /* Card Details Structure */
+    .card-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      transform: translateZ(20px); /* Pushes elements outward dynamically in depth */
+    }
+
+    .rank-tag {
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(255,255,255,0.06);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .name { 
+      font-size: 19px; 
+      font-weight: 700; 
+      color: #ffffff; 
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+      transform: translateZ(25px);
+    }
+    
+    .card-female .name { color: #fff; }
+
+    .info { 
+      font-size: 14px; 
+      color: #94a3b8; 
+      margin-bottom: 5px; 
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transform: translateZ(15px);
+    }
+    .info strong { color: #cbd5e1; font-weight: 500; }
+
     .remarks { 
       display: inline-block;
       font-size: 11px; 
-      background: #fff9c4; 
-      color: #827717; 
-      padding: 2px 8px; 
-      border-radius: 4px; 
-      margin-top: 8px;
-      font-weight: bold;
+      background: rgba(245, 158, 11, 0.1); 
+      color: #fbbf24; 
+      padding: 4px 10px; 
+      border-radius: 8px; 
+      margin-top: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      transform: translateZ(10px);
     }
 
-    /* Call and WA Buttons */
-    .btn-group { display: flex; gap: 8px; margin-top: 15px; }
-    .btn-group button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; }
-    .call-btn { background: #2e7d32; }
-    .wa-btn { background: #25D366; }
+    /* --- Action Engine Buttons --- */
+    .btn-group { 
+      display: flex; 
+      gap: 10px; 
+      margin-top: 20px;
+      transform: translateZ(30px);
+    }
+    .btn-group button { 
+      flex: 1; 
+      padding: 14px; 
+      border: none; 
+      border-radius: 14px; 
+      font-weight: 700; 
+      font-size: 14px;
+      color: white; 
+      cursor: pointer; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .call-btn { 
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .call-btn:hover { 
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    .wa-btn { 
+      background: linear-gradient(135deg, #25D366 0%, #1cbd55 100%); 
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .wa-btn:hover { 
+      background: linear-gradient(135deg, #1cbd55 0%, #148f3f 100%); 
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+    }
 
-    /* About Modal */
+    /* --- UI Immersive Blur Modal --- */
     #aboutModal {
       display: none;
       position: fixed;
-      z-index: 200;
+      z-index: 300;
       left: 0; top: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(4px);
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: fadeIn 0.3s ease-out;
     }
     .modal-content {
-      background: white;
-      margin: 20% auto;
-      padding: 25px;
-      border-radius: 15px;
-      width: 85%;
-      max-width: 350px;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-3d);
+      margin: 15vh auto;
+      padding: 30px;
+      border-radius: 24px;
+      width: 90%;
+      max-width: 380px;
       text-align: center;
+      transform: scale(0.9) translateY(20px);
+      animation: modalSlide 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
-    .close-btn { background: #eee; border: none; padding: 10px; width: 100%; margin-top: 20px; border-radius: 8px; font-weight: bold; cursor: pointer;}
+    .modal-content h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+    .modal-dev-name {
+      color: #38bdf8;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .modal-content p {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .modal-links-box {
+      margin: 25px 0 15px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px;
+    }
+    .modal-link {
+      text-decoration: none; 
+      color: white; 
+      padding: 14px; 
+      border-radius: 14px; 
+      font-weight: 700; 
+      font-size: 14px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .close-btn { 
+      background: rgba(255,255,255,0.05); 
+      color: #94a3b8;
+      border: 1px solid var(--glass-border); 
+      padding: 12px; 
+      width: 100%; 
+      margin-top: 10px; 
+      border-radius: 12px; 
+      font-weight: 700; 
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .close-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalSlide { to { transform: scale(1) translateY(0); opacity: 1; } }
   </style>
 </head>
 <body>
 
   <header>
-    CMH-SAVAR MEDICAL SECTION
+    <h1>CMH-Savar Medical Section</h1>
     <div class="header-btns">
-      <button class="update-btn" onclick="location.reload()">Update</button>
-      <button class="about-btn" onclick="toggleAbout(true)">About</button>
+      <button class="header-btn update-btn-3d" onclick="location.reload()">Update</button>
+      <button class="header-btn" onclick="toggleAbout(true)">About</button>
     </div>
   </header>
 
   <div id="aboutModal">
     <div class="modal-content">
-      <h3>Developer Information</h3>
-      <p style="margin: 15px 0;"><b>Sergeant (MA) Md Mamun Or Rashid</b></p>
-      <p>Ward Master Office <br>CMH Savar</p>
+      <h3>System Developer</h3>
+      <div class="modal-dev-name">Sergeant (MA) Md Mamun Or Rashid</div>
+      <p>Ward Master Office<br><strong>CMH Savar</strong></p>
       
-      <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
-        <a href="tel:01721148983" style="text-decoration: none; background: #2e7d32; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px;">📞 Call: 01721148983</a>
-        <a href="https://wa.me/8801721148983" target="_blank" style="text-decoration: none; background: #25D366; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px;">💬 WhatsApp</a>
+      <div class="modal-links-box">
+        <a href="tel:01721148983" class="modal-link call-btn">📞 Secure Call Interface</a>
+        <a href="https://wa.me/8801721148983" target="_blank" class="modal-link wa-btn">💬 Instant WhatsApp</a>
       </div>
 
-      <button class="close-btn" onclick="toggleAbout(false)">Close</button>
+      <button class="close-btn" onclick="toggleAbout(false)">Dismiss Matrix</button>
     </div>
   </div>
 
-  <div class="tabs">
-    <div class="tab-buttons">
-      <button class="btn-all active" onclick="changeTab(0)">All</button>
-      <button class="btn-male" onclick="changeTab(1)">Male</button>
-      <button class="btn-female" onclick="changeTab(2)">Female</button>
+  <div class="app-controls">
+    <div class="search-wrapper">
+      <input type="text" id="search" class="search-box" placeholder="Search operational database..." onkeyup="app.filter()">
+    </div>
+
+    <div class="tab-container">
+      <div class="tab-buttons">
+        <button class="btn-all active" onclick="changeTab(0)">All Base</button>
+        <button class="btn-male" onclick="changeTab(1)">Male</button>
+        <button class="btn-female" onclick="changeTab(2)">Female</button>
+      </div>
     </div>
   </div>
-
-  <input type="text" id="search" class="search-box" placeholder="Search by name or army number..." onkeyup="app.filter()">
 
   <div id="list"></div>
 
@@ -199,7 +433,7 @@
     const state = {
       currentTab: 0,
       data: [
-        // Male Personnel
+        // Male Personnel Database Records
         {army:"BJO-73300", rank:"SWO", name:"MD AKRAM HOSSAIN", phone:"01756192594", remarks:"SJCO", gender:"male"},
         {army:"BJO-73359", rank:"WO", name:"MD AMINUL ISLAM", phone:"01718913391", remarks:"", gender:"male"},
         {army:"BJO-73406", rank:"WO", name:"MD ASADUZZAMAN NUR", phone:"01731282701", remarks:"WARD MASTER", gender:"male"},
@@ -250,7 +484,8 @@
         {army:"2016416", rank:"SNK", name:"MD MAHMUDUL HAQUE", phone:"01830416642", remarks:"", gender:"male"},
         {army:"2016458", rank:"SNK", name:"YOUSUF ALI", phone:"01956976318", remarks:"", gender:"male"},
         {army:"2016532", rank:"SNK", name:"ASHIQUE HOSSAIN", phone:"01971978926", remarks:"", gender:"male"},
-        // Female Personnel
+        
+        // Female Personnel Database Records
         {army:"2012460", rank:"LCPL", name:"SHILPI KHATUN", phone:"01789486998", remarks:"", gender:"female"},
         {army:"2012477", rank:"LCPL", name:"TAHMINA", phone:"01776332951", remarks:"", gender:"female"},
         {army:"2012483", rank:"LCPL", name:"MONIRA", phone:"01632380161", remarks:"", gender:"female"},
@@ -275,6 +510,7 @@
       filter: function() {
         const term = document.getElementById('search').value.toLowerCase().trim();
         let filtered = state.data;
+        
         if (state.currentTab === 1) filtered = filtered.filter(c => c.gender === 'male');
         if (state.currentTab === 2) filtered = filtered.filter(c => c.gender === 'female');
         
@@ -292,27 +528,33 @@
         const male = list.filter(c => c.gender === 'male');
         const female = list.filter(c => c.gender === 'female');
 
-        if(male.length > 0) {
-          html += `<div class="section-title">MALE PERSONNEL (${male.length})</div>`;
+        if(male.length > 0 && (state.currentTab === 0 || state.currentTab === 1)) {
+          html += `<div class="section-title">Male Division (${male.length})</div>`;
           male.forEach(c => html += this.cardTemplate(c));
         }
-        if(female.length > 0) {
-          html += `<div class="section-title">FEMALE PERSONNEL (${female.length})</div>`;
+        if(female.length > 0 && (state.currentTab === 0 || state.currentTab === 2)) {
+          html += `<div class="section-title">Female Division (${female.length})</div>`;
           female.forEach(c => html += this.cardTemplate(c));
         }
-        container.innerHTML = html || '<p style="text-align:center; padding:30px;">No records found</p>';
+        
+        container.innerHTML = html || '<p style="text-align:center; padding:40px; color:#64748b; font-weight:600;">No operational assets found matching criteria.</p>';
       },
 
       cardTemplate: function(c) {
         return `
           <div class="contact-card ${c.gender === 'female' ? 'card-female' : ''}">
-            <div class="name">${c.rank} ${c.name}</div>
-            <div class="info">Army No: ${c.army || 'N/A'}</div>
-            <div class="info">Mobile: ${c.phone}</div>
+            <div class="card-meta-row">
+              <span class="rank-tag">${c.rank}</span>
+              <span style="font-size: 11px; font-weight:700; color: ${c.gender === 'female' ? 'var(--accent-female)' : 'var(--accent-male)'}; opacity:0.8;">
+                #${c.army || 'N/A'}
+              </span>
+            </div>
+            <div class="name">${c.name}</div>
+            <div class="info"><strong>Mobile:</strong> ${c.phone}</div>
             ${c.remarks.trim() ? `<div class="remarks">${c.remarks}</div>` : ''}
             <div class="btn-group">
-              <button class="call-btn" onclick="window.location.href='tel:${c.phone}'">Call</button>
-              <button class="wa-btn" onclick="window.open('https://wa.me/88${c.phone.replace(/[^0-9]/g,'')}')">WhatsApp</button>
+              <button class="call-btn" onclick="window.location.href='tel:${c.phone}'">⚡ Call</button>
+              <button class="wa-btn" onclick="window.open('https://wa.me/88${c.phone.replace(/[^0-9]/g,'')}')">💬 Secure WA</button>
             </div>
           </div>`;
       }
@@ -325,10 +567,11 @@
     }
 
     function toggleAbout(show) { 
-      document.getElementById('aboutModal').style.display = show ? 'block' : 'none'; 
+      const modal = document.getElementById('aboutModal');
+      modal.style.display = show ? 'block' : 'none'; 
     }
 
-    // Initial load
+    // Initialize System App Engine Lifecycle
     app.render(state.data);
   </script>
 </body>
