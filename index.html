@@ -1,332 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMH Savar | Medical Section</title>
-  <style>
-    /* Basic Styling */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-      background: #f4f7f6; 
-      color: #333;
-    }
-    
-    header { 
-      background: linear-gradient(135deg, #0d47a1, #1976d2); 
-      color: white; 
-      padding: 35px 15px; 
-      text-align: center; 
-      font-size: 20px; 
-      font-weight: bold;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CMH Savar — Medical Section Directory</title>
+<meta name="theme-color" content="#0a2540">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230a2540'/%3E%3Cpath d='M44 22h12v22h22v12H56v22H44V56H22V44h22z' fill='%23e8b64a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#08192e;
+    --navy-900:#0a2540;
+    --navy-800:#12335c;
+    --navy-700:#1a4373;
+    --steel:#2e6ea6;
+    --gold:#c99a3d;
+    --gold-soft:#e8b64a;
+    --rose:#b8305a;
+    --rose-soft:#d85f88;
+    --ok:#1f7a4d;
+    --wa:#1fae5c;
+    --warn:#b8790c;
+    --bg:#f2f4f7;
+    --surface:#ffffff;
+    --surface-2:#f7f8fa;
+    --border:#e2e6ec;
+    --text-1:#111826;
+    --text-2:#4b5566;
+    --text-3:#8992a3;
+    --radius-lg:18px;
+    --radius-md:12px;
+    --radius-sm:8px;
+    --shadow-sm:0 1px 2px rgba(10,37,64,.06), 0 1px 1px rgba(10,37,64,.04);
+    --shadow-md:0 6px 20px rgba(10,37,64,.10);
+    --shadow-lg:0 20px 45px rgba(10,37,64,.20);
+    --focus-ring:0 0 0 3px rgba(46,110,166,.45);
+    color-scheme: light;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b1220;
+    --surface:#121b2c;
+    --surface-2:#0f1729;
+    --border:#233047;
+    --text-1:#eef1f6;
+    --text-2:#aab4c4;
+    --text-3:#6d7891;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.35);
+    --shadow-md:0 8px 24px rgba(0,0,0,.45);
+    --shadow-lg:0 24px 50px rgba(0,0,0,.55);
+    color-scheme: dark;
+  }
 
-    /* Buttons in Header */
-    .header-btns {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 6px;
-    }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text-1);
+    min-height:100dvh;
+    transition: background .25s ease, color .25s ease;
+  }
+  .mono{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:none; box-shadow:var(--focus-ring); border-radius:6px; }
 
-    .update-btn {
-      background: #4caf50;
-      color: white;
-      border: 1px solid white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  /* ---------- Header ---------- */
+  header{
+    background:
+      radial-gradient(1100px 220px at 15% -40%, rgba(201,154,61,.25), transparent 60%),
+      linear-gradient(150deg, var(--navy-950), var(--navy-800) 65%, var(--navy-700));
+    color:#f4f7fb;
+    padding:22px 16px 20px;
+    position:relative;
+    box-shadow:0 6px 22px rgba(8,25,46,.35);
+  }
+  .header-inner{
+    max-width:720px; margin:0 auto;
+    display:flex; align-items:center; gap:12px;
+  }
+  .crest{
+    flex:0 0 auto; width:44px; height:44px; border-radius:12px;
+    background:linear-gradient(160deg, var(--gold-soft), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 4px 10px rgba(0,0,0,.25);
+  }
+  .crest svg{ width:24px; height:24px; }
+  .title-block{ flex:1; min-width:0; }
+  .eyebrow{
+    font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold-soft); font-weight:700; opacity:.9;
+  }
+  h1{
+    font-size:17px; font-weight:800; letter-spacing:.01em; line-height:1.25;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .header-actions{ display:flex; gap:6px; flex:0 0 auto; }
+  .icon-btn{
+    width:38px; height:38px; border-radius:10px; border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.08); color:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:.15s ease; backdrop-filter: blur(4px);
+  }
+  .icon-btn:hover{ background:rgba(255,255,255,.16); transform:translateY(-1px); }
+  .icon-btn svg{ width:18px; height:18px; }
 
-    .about-btn {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  .stat-row{
+    max-width:720px; margin:16px auto 0; display:flex; gap:10px;
+  }
+  .stat-pill{
+    flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
+    border-radius:12px; padding:8px 12px; text-align:center;
+  }
+  .stat-pill b{ display:block; font-size:16px; font-weight:800; }
+  .stat-pill span{ font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:rgba(244,247,251,.65); }
 
-    /* Tabs Styling */
-    .tabs { 
-      background: #fff; 
-      padding: 15px 10px; 
-      position: sticky; 
-      top: 0; 
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+  /* ---------- Sticky controls ---------- */
+  .controls{
+    position:sticky; top:0; z-index:60;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px) saturate(1.1);
+    border-bottom:1px solid var(--border);
+    padding:12px 16px;
+  }
+  .controls-inner{ max-width:720px; margin:0 auto; }
 
-    .tab-buttons { display: flex; gap: 8px; }
+  .search-wrap{ position:relative; margin-bottom:10px; }
+  .search-wrap svg.search-icon{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; color:var(--text-3); pointer-events:none;
+  }
+  .search-box{
+    width:100%; padding:12px 40px 12px 40px; border-radius:12px;
+    border:1.5px solid var(--border); background:var(--surface); color:var(--text-1);
+    font-size:15px; outline:none; transition:.15s ease;
+  }
+  .search-box::placeholder{ color:var(--text-3); }
+  .search-box:focus{ border-color:var(--steel); box-shadow:var(--focus-ring); }
+  .clear-btn{
+    position:absolute; right:8px; top:50%; transform:translateY(-50%);
+    width:26px; height:26px; border-radius:50%; border:none; background:var(--surface-2);
+    color:var(--text-2); cursor:pointer; display:none; align-items:center; justify-content:center;
+  }
+  .clear-btn.show{ display:flex; }
 
-    .tab-buttons button { 
-      flex: 1; 
-      padding: 12px 5px; 
-      border: none; 
-      border-radius: 8px; 
-      color: white; 
-      font-size: 14px; 
-      font-weight: bold; 
-      cursor: pointer;
-      opacity: 0.5;
-      transition: 0.3s;
-    }
+  .row-controls{ display:flex; gap:8px; align-items:center; }
+  .tab-buttons{ display:flex; gap:6px; flex:1; background:var(--surface-2); padding:4px; border-radius:12px; border:1px solid var(--border); }
+  .tab-buttons button{
+    flex:1; padding:9px 6px; border:none; border-radius:9px; background:transparent;
+    color:var(--text-2); font-size:13px; font-weight:700; cursor:pointer; transition:.15s ease;
+  }
+  .tab-buttons button.active{ background:var(--navy-900); color:#fff; box-shadow:var(--shadow-sm); }
+  :root[data-theme="dark"] .tab-buttons button.active{ background:var(--steel); }
 
-    .btn-all { background: #455a64; }
-    .btn-male { background: #1565c0; }
-    .btn-female { background: #c2185b; }
-    .tab-buttons button.active { opacity: 1; transform: scale(1.02); }
+  .sort-select{
+    border:1px solid var(--border); background:var(--surface); color:var(--text-2);
+    border-radius:10px; padding:9px 10px; font-size:12.5px; font-weight:600; cursor:pointer;
+  }
 
-    /* Search Box */
-    .search-box { 
-      width: 92%; 
-      margin: 15px auto; 
-      padding: 14px 20px; 
-      border-radius: 25px; 
-      border: 2px solid #ddd; 
-      font-size: 16px; 
-      display: block; 
-      outline: none;
-    }
+  /* ---------- List ---------- */
+  main{ max-width:720px; margin:0 auto; padding:14px 16px 60px; }
 
-    /* Contact Card Styling */
-    .section-title { 
-      padding: 12px 15px; 
-      margin: 15px 10px 5px; 
-      font-weight: bold; 
-      font-size: 14px;
-      color: #555;
-      background: #e1e8ed;
-      border-radius: 5px;
-    }
+  .section-title{
+    display:flex; align-items:center; gap:8px;
+    padding:6px 4px; margin:18px 0 10px; font-weight:800; font-size:11.5px;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--text-2);
+  }
+  .section-title::after{ content:""; flex:1; height:1px; background:var(--border); }
+  .section-title.male{ color:var(--steel); }
+  .section-title.female{ color:var(--rose); }
 
-    .contact-card { 
-      background: white; 
-      margin: 10px; 
-      padding: 18px; 
-      border-radius: 12px; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-      border-left: 5px solid #1976d2;
-    }
-    .card-female { border-left-color: #ec407a; }
+  .contact-card{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:14px 14px 12px;
+    margin-bottom:10px; box-shadow:var(--shadow-sm);
+    display:flex; gap:12px; align-items:flex-start;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .contact-card:hover{ box-shadow:var(--shadow-md); transform:translateY(-1px); }
 
-    .name { font-size: 18px; font-weight: bold; color: #0d47a1; margin-bottom: 6px; }
-    .info { font-size: 15px; color: #444; margin-bottom: 3px; }
-    .remarks { 
-      display: inline-block;
-      font-size: 11px; 
-      background: #fff9c4; 
-      color: #827717; 
-      padding: 2px 8px; 
-      border-radius: 4px; 
-      margin-top: 8px;
-      font-weight: bold;
-    }
+  .avatar{
+    flex:0 0 auto; width:44px; height:44px; border-radius:11px;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:15px; color:#fff;
+    background:linear-gradient(155deg, var(--steel), var(--navy-800));
+  }
+  .contact-card.female .avatar{ background:linear-gradient(155deg, var(--rose-soft), var(--rose)); }
 
-    /* Call and WA Buttons */
-    .btn-group { display: flex; gap: 8px; margin-top: 15px; }
-    .btn-group button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; }
-    .call-btn { background: #2e7d32; }
-    .wa-btn { background: #25D366; }
+  .card-body{ flex:1; min-width:0; }
+  .card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+  .name-line{ min-width:0; }
+  .rank-badge{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
+    letter-spacing:.04em; color:var(--gold); background:rgba(201,154,61,.12);
+    border:1px solid rgba(201,154,61,.35); padding:1px 6px; border-radius:5px; margin-bottom:4px;
+  }
+  .name{ font-size:15.5px; font-weight:700; color:var(--text-1); line-height:1.3; word-break:break-word; }
+  mark{ background:rgba(201,154,61,.35); color:inherit; border-radius:3px; padding:0 1px; }
 
-    /* About Modal */
-    #aboutModal {
-      display: none;
-      position: fixed;
-      z-index: 200;
-      left: 0; top: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(4px);
-    }
-    .modal-content {
-      background: white;
-      margin: 20% auto;
-      padding: 25px;
-      border-radius: 15px;
-      width: 85%;
-      max-width: 350px;
-      text-align: center;
-    }
-    .close-btn { background: #eee; border: none; padding: 10px; width: 100%; margin-top: 20px; border-radius: 8px; font-weight: bold; cursor: pointer;}
-  </style>
+  .copy-btn{
+    flex:0 0 auto; width:30px; height:30px; border-radius:8px; border:1px solid var(--border);
+    background:var(--surface-2); color:var(--text-2); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:.15s ease;
+  }
+  .copy-btn:hover{ background:var(--border); }
+  .copy-btn.copied{ background:var(--ok); border-color:var(--ok); color:#fff; }
+  .copy-btn svg{ width:14px; height:14px; }
+
+  .info-row{ display:flex; flex-wrap:wrap; gap:4px 12px; font-size:13px; color:var(--text-2); margin-top:4px; }
+  .info-row span b{ color:var(--text-1); font-weight:600; }
+  .badge-row{ display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .remarks{
+    font-size:10.5px; background:rgba(31,122,77,.10); color:var(--ok);
+    border:1px solid rgba(31,122,77,.25); padding:2px 8px; border-radius:6px; font-weight:700;
+    letter-spacing:.02em;
+  }
+  .verify-flag{
+    font-size:10.5px; background:rgba(184,121,12,.10); color:var(--warn);
+    border:1px solid rgba(184,121,12,.28); padding:2px 8px; border-radius:6px; font-weight:700;
+  }
+
+  .btn-group{ display:flex; gap:8px; margin-top:12px; }
+  .btn-group button{
+    flex:1; padding:10px; border:none; border-radius:9px; font-weight:700; font-size:13px;
+    color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:.15s ease;
+  }
+  .btn-group button svg{ width:15px; height:15px; }
+  .call-btn{ background:var(--ok); }
+  .call-btn:hover{ filter:brightness(1.08); }
+  .wa-btn{ background:var(--wa); }
+  .wa-btn:hover{ filter:brightness(1.08); }
+
+  .empty-state{ text-align:center; padding:60px 20px; color:var(--text-3); }
+  .empty-state svg{ width:46px; height:46px; margin-bottom:12px; opacity:.5; }
+  .empty-state p{ font-size:14px; font-weight:600; }
+  .empty-state span{ font-size:12.5px; }
+
+  .skeleton{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; margin-bottom:10px; display:flex; gap:12px; }
+  .sk-box{ border-radius:8px; background:linear-gradient(90deg, var(--surface-2) 25%, var(--border) 37%, var(--surface-2) 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; }
+  @keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:0 0;} }
+
+  footer{ text-align:center; padding:18px 16px 34px; color:var(--text-3); font-size:11.5px; }
+
+  /* ---------- Modal ---------- */
+  #aboutModal{
+    display:none; position:fixed; inset:0; z-index:200;
+    background:rgba(8,15,26,.65); backdrop-filter:blur(6px);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  #aboutModal.open{ display:flex; }
+  .modal-content{
+    background:var(--surface); border-radius:var(--radius-lg); width:100%; max-width:340px;
+    padding:26px 22px 20px; text-align:center; box-shadow:var(--shadow-lg);
+    border:1px solid var(--border);
+    animation: pop .18s ease;
+  }
+  @keyframes pop{ from{ opacity:0; transform:scale(.94); } to{ opacity:1; transform:scale(1);} }
+  .modal-crest{
+    width:52px; height:52px; border-radius:14px; margin:0 auto 14px;
+    background:linear-gradient(160deg, var(--gold-soft), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-content h3{ font-size:15px; font-weight:800; margin-bottom:4px; }
+  .modal-content .role{ font-size:12px; color:var(--text-3); margin-bottom:14px; }
+  .modal-content .dev-name{ font-size:14px; font-weight:700; margin-bottom:2px; }
+  .modal-content .dev-unit{ font-size:12.5px; color:var(--text-2); margin-bottom:16px; line-height:1.5; }
+  .modal-actions{ display:flex; flex-direction:column; gap:9px; }
+  .modal-actions a{
+    text-decoration:none; padding:11px; border-radius:10px; font-weight:700; font-size:13.5px;
+    display:flex; align-items:center; justify-content:center; gap:7px; color:#fff; transition:.15s ease;
+  }
+  .modal-actions a svg{ width:15px; height:15px; }
+  .modal-call{ background:var(--ok); }
+  .modal-wa{ background:var(--wa); }
+  .close-btn{
+    background:var(--surface-2); border:1px solid var(--border); color:var(--text-2);
+    padding:10px; width:100%; margin-top:14px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer;
+  }
+
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    CMH-SAVAR MEDICAL SECTION
-    <div class="header-btns">
-      <button class="update-btn" onclick="location.reload()">Update</button>
-      <button class="about-btn" onclick="toggleAbout(true)">About</button>
+<header>
+  <div class="header-inner">
+    <div class="crest" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2 5h5l-4 3.5L16.5 16 12 12.8 7.5 16 9 10.5 5 7h5l2-5z" fill="#0a2540"/></svg>
     </div>
-  </header>
+    <div class="title-block">
+      <div class="eyebrow">Bangladesh Army · CMH Savar</div>
+      <h1>Medical Section Directory</h1>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+      </button>
+      <button class="icon-btn" id="refreshBtn" aria-label="Refresh directory" title="Refresh directory">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></svg>
+      </button>
+      <button class="icon-btn" id="aboutBtn" aria-haspopup="dialog" aria-controls="aboutModal" aria-label="About this app" title="About">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="stat-row" id="statRow" aria-hidden="true"></div>
+</header>
 
-  <div id="aboutModal">
-    <div class="modal-content">
-      <h3>Developer Information</h3>
-      <p style="margin: 15px 0;"><b>Sergeant (MA) Md Mamun Or Rashid</b></p>
-      <p>Ward Master Office <br>CMH Savar</p>
-      
-      <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
-        <a href="tel:01721148983" style="text-decoration: none; background: #2e7d32; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px;">📞 Call: 01721148983</a>
-        <a href="https://wa.me/8801721148983" target="_blank" style="text-decoration: none; background: #25D366; color: white; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px;">💬 WhatsApp</a>
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <label for="search" class="sr-only">Search by name or army number</label>
+      <input type="text" id="search" class="search-box" placeholder="Search by name, rank or army number…" autocomplete="off">
+      <button class="clear-btn" id="clearSearch" aria-label="Clear search">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="row-controls">
+      <div class="tab-buttons" role="tablist" aria-label="Filter by gender">
+        <button role="tab" aria-selected="true" class="active" data-tab="all">All</button>
+        <button role="tab" aria-selected="false" data-tab="male">Male</button>
+        <button role="tab" aria-selected="false" data-tab="female">Female</button>
       </div>
-
-      <button class="close-btn" onclick="toggleAbout(false)">Close</button>
+      <select class="sort-select" id="sortSelect" aria-label="Sort order">
+        <option value="default">Default order</option>
+        <option value="name">Name A–Z</option>
+        <option value="rank">By rank</option>
+      </select>
     </div>
   </div>
+</div>
 
-  <div class="tabs">
-    <div class="tab-buttons">
-      <button class="btn-all active" onclick="changeTab(0)">All</button>
-      <button class="btn-male" onclick="changeTab(1)">Male</button>
-      <button class="btn-female" onclick="changeTab(2)">Female</button>
+<main>
+  <div id="list" aria-live="polite"></div>
+</main>
+
+<footer>CMH Savar · Medical Section · Internal use only</footer>
+
+<div id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+  <div class="modal-content">
+    <div class="modal-crest" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none"><path d="M12 2l2 5h5l-4 3.5L16.5 16 12 12.8 7.5 16 9 10.5 5 7h5l2-5z" fill="#0a2540"/></svg>
     </div>
+    <h3 id="aboutTitle">Developer Information</h3>
+    <div class="role">Maintained internally by the Ward Master Office</div>
+    <div class="dev-name">Sergeant (MA) Md Mamun Or Rashid</div>
+    <div class="dev-unit">Ward Master Office<br>CMH Savar</div>
+    <div class="modal-actions">
+      <a class="modal-call" href="tel:01721148983">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
+        Call 01721148983
+      </a>
+      <a class="modal-wa" href="https://wa.me/8801721148983" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1s-1.3-.5-2.4-1.5c-.9-.8-1.5-1.8-1.6-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.1.2-.3.3-.4.1-.2 0-.3 0-.5s-.7-1.7-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.5-.3z"/><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 18.2a8.1 8.1 0 01-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1112 20.2z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+    <button class="close-btn" id="closeAbout">Close</button>
   </div>
+</div>
 
-  <input type="text" id="search" class="search-box" placeholder="Search by name or army number..." onkeyup="app.filter()">
+<script>
+(function(){
+  "use strict";
 
-  <div id="list"></div>
+  /* ============ Data ============
+     NOTE: A few mobile numbers in the source register have fewer than
+     11 digits (e.g. Safinaz, Sumaya Sultana Biba). These are flagged
+     with a "Verify" badge below rather than silently guessed at —
+     please confirm with the Ward Master Office and correct at source. */
+  const DATA = [
+    {army:"BJO-73300", rank:"SWO", name:"Md Akram Hossain", phone:"01756192594", remarks:"SJCO", gender:"male"},
+    {army:"BJO-73359", rank:"WO", name:"Md Aminul Islam", phone:"01718913391", remarks:"", gender:"male"},
+    {army:"BJO-73406", rank:"WO", name:"Md Asaduzzaman Nur", phone:"01731282701", remarks:"Ward Master", gender:"male"},
+    {army:"2008637", rank:"SGT", name:"Saidur Rahman", phone:"01711930146", remarks:"Canteen NCO", gender:"male"},
+    {army:"2008639", rank:"SGT", name:"Nazrul Islam", phone:"01714779142", remarks:"", gender:"male"},
+    {army:"2008956", rank:"SGT", name:"Md Hasan Al Mamun", phone:"01917662742", remarks:"E&CD In Charge", gender:"male"},
+    {army:"2009300", rank:"SGT", name:"Homayun", phone:"01769097347", remarks:"Surg Wd In Charge", gender:"male"},
+    {army:"2009461", rank:"SGT", name:"Abdullah Al Mamun", phone:"01725340950", remarks:"W/M Office", gender:"male"},
+    {army:"2009824", rank:"SGT", name:"Mostofa", phone:"01913385965", remarks:"CSM", gender:"male"},
+    {army:"2009890", rank:"SGT", name:"Md Mamun Or Rashid", phone:"01721148983", remarks:"W/M Office", gender:"male"},
+    {army:"2009475", rank:"CPL", name:"Md Akul Hossain", phone:"01764128559", remarks:"HDU", gender:"male"},
+    {army:"2010318", rank:"SGT", name:"Arif", phone:"01872303600", remarks:"Pharmacy", gender:"male"},
+    {army:"2010595", rank:"CPL", name:"Md Delowar", phone:"01727803352", remarks:"Med Wd", gender:"male"},
+    {army:"2011239", rank:"CPL", name:"Ashraful", phone:"01738695454", remarks:"", gender:"male"},
+    {army:"2011021", rank:"CPL", name:"Md Habibur Rahman", phone:"01725576537", remarks:"Medical Store", gender:"male"},
+    {army:"2013918", rank:"SNK", name:"Rimon", phone:"01871951522", remarks:"T/D", gender:"male"},
+    {army:"2013981", rank:"SNK", name:"Mosarof", phone:"01780517839", remarks:"", gender:"male"},
+    {army:"2013984", rank:"SNK", name:"Raihan", phone:"01964606184", remarks:"Comdt Rannar", gender:"male"},
+    {army:"2013988", rank:"SNK", name:"Fahim", phone:"01876445393", remarks:"", gender:"male"},
+    {army:"2014069", rank:"SNK", name:"Monir-2", phone:"01646344328", remarks:"", gender:"male"},
+    {army:"2014098", rank:"SNK", name:"Shawon", phone:"01794653434", remarks:"", gender:"male"},
+    {army:"2014128", rank:"SNK", name:"Biplob", phone:"01311887560", remarks:"Coy Munsi", gender:"male"},
+    {army:"2014175", rank:"SNK", name:"Hridoy", phone:"01604357682", remarks:"", gender:"male"},
+    {army:"2014238", rank:"SNK", name:"Juwel", phone:"01720350866", remarks:"", gender:"male"},
+    {army:"2014409", rank:"SNK", name:"Rakibul Hasan", phone:"01916880026", remarks:"Temp Att", gender:"male"},
+    {army:"2014626", rank:"SNK", name:"Rumman Ali", phone:"01738179995", remarks:"", gender:"male"},
+    {army:"2015468", rank:"SNK", name:"Md Maruf Hossain", phone:"01763041633", remarks:"", gender:"male"},
+    {army:"2015697", rank:"SNK", name:"Md Roni Ali", phone:"01605656592", remarks:"", gender:"male"},
+    {army:"2015713", rank:"SNK", name:"Shariful Islam", phone:"01943753516", remarks:"", gender:"male"},
+    {army:"2015721", rank:"SNK", name:"Nazmul Huda Rabbani", phone:"01608530441", remarks:"", gender:"male"},
+    {army:"2015730", rank:"SNK", name:"Taijul Islam", phone:"01319471596", remarks:"", gender:"male"},
+    {army:"2015808", rank:"SNK", name:"Mahbub Hossen Shordar", phone:"01603646616", remarks:"", gender:"male"},
+    {army:"2015812", rank:"SNK", name:"Israfil", phone:"01743894189", remarks:"", gender:"male"},
+    {army:"2015815", rank:"SNK", name:"Wahid Ali", phone:"01762356232", remarks:"", gender:"male"},
+    {army:"2015835", rank:"SNK", name:"Siam Sadik Sumon", phone:"01635056692", remarks:"", gender:"male"},
+    {army:"2015849", rank:"SNK", name:"Maidul Islam", phone:"01314155512", remarks:"", gender:"male"},
+    {army:"2015929", rank:"SNK", name:"Habibur Rahman", phone:"01714596151", remarks:"", gender:"male"},
+    {army:"2000000", rank:"SNK PMA", name:"Shadhin", phone:"01602371649", remarks:"", gender:"male"},
+    {army:"2016275", rank:"SNK", name:"Minhajul Islam", phone:"01602708954", remarks:"", gender:"male"},
+    {army:"2016334", rank:"SNK", name:"Rohit Akondo", phone:"01721949591", remarks:"", gender:"male"},
+    {army:"2016316", rank:"SNK", name:"Shadhath Hossain", phone:"01874152830", remarks:"", gender:"male"},
+    {army:"2016364", rank:"SNK", name:"Tanvir Hossain", phone:"01894354262", remarks:"", gender:"male"},
+    {army:"2016366", rank:"SNK", name:"Forkan Islam", phone:"01930134585", remarks:"", gender:"male"},
+    {army:"2016369", rank:"SNK", name:"Niaz Mahmud", phone:"01832076437", remarks:"", gender:"male"},
+    {army:"2016379", rank:"SNK", name:"Abu Jaher Islam Shamim", phone:"01318063096", remarks:"", gender:"male"},
+    {army:"2016416", rank:"SNK", name:"Md Mahmudul Haque", phone:"01830416642", remarks:"", gender:"male"},
+    {army:"2016458", rank:"SNK", name:"Yousuf Ali", phone:"01956976318", remarks:"", gender:"male"},
+    {army:"2016532", rank:"SNK", name:"Ashique Hossain", phone:"01971978926", remarks:"", gender:"male"},
+    {army:"2012477", rank:"LCPL", name:"Tahmina", phone:"01776332951", remarks:"", gender:"female"},
+    {army:"2012483", rank:"LCPL", name:"Monira", phone:"01632380161", remarks:"", gender:"female"},
+    {army:"2012578", rank:"LCPL", name:"Papia Sultana", phone:"01706128160", remarks:"", gender:"female"},
+    {army:"2012647", rank:"LCPL", name:"Nazmun Nahar", phone:"01709183427", remarks:"", gender:"female"},
+    {army:"2012839", rank:"LCPL", name:"Safinaz", phone:"0185444059", remarks:"", gender:"female"},
+    {army:"2012848", rank:"LCPL", name:"Monika Rani Saha", phone:"01709200355", remarks:"", gender:"female"},
+    {army:"2012838", rank:"LCPL", name:"Tania", phone:"01304591367", remarks:"", gender:"female"},
+    {army:"2012810", rank:"LCPL", name:"Kona", phone:"01740764881", remarks:"", gender:"female"},
+    {army:"2012984", rank:"LCPL", name:"Fatema", phone:"01703360560", remarks:"", gender:"female"},
+    {army:"2015692", rank:"SNK", name:"Lima Akter", phone:"01926860092", remarks:"", gender:"female"},
+    {army:"2015839", rank:"SNK", name:"Olija Islam Mou", phone:"01825440048", remarks:"", gender:"female"},
+    {army:"2016521", rank:"SNK", name:"Tania Sultana", phone:"01328982372", remarks:"", gender:"female"},
+    {army:"2016527", rank:"SNK", name:"Juthi Akter", phone:"01760155893", remarks:"", gender:"female"},
+    {army:"2016537", rank:"SNK", name:"Sumaya Sultana Biba", phone:"0186022931", remarks:"", gender:"female"},
+    {army:"2016587", rank:"SNK", name:"Jobaida Akter Rotna", phone:"01317375952", remarks:"", gender:"female"},
+    {army:"2016576", rank:"SNK", name:"Kamona Akter", phone:"01311190853", remarks:"", gender:"female"}
+  ];
 
-  <script>
-    const state = {
-      currentTab: 0,
-      data: [
-        // Male Personnel
-        {army:"BJO-73300", rank:"SWO", name:"MD AKRAM HOSSAIN", phone:"01756192594", remarks:"SJCO", gender:"male"},
-        {army:"BJO-73359", rank:"WO", name:"MD AMINUL ISLAM", phone:"01718913391", remarks:"", gender:"male"},
-        {army:"BJO-73406", rank:"WO", name:"MD ASADUZZAMAN NUR", phone:"01731282701", remarks:"WARD MASTER", gender:"male"},
-        {army:"2008637", rank:"SGT", name:"SAIDUR RAHMAN", phone:"01711930146", remarks:"CANTEEN NCO", gender:"male"},
-        {army:"2008639", rank:"SGT", name:"NAZRUL ISLAM", phone:"01714779142", remarks:"", gender:"male"},
-        {army:"2008956", rank:"SGT", name:"MD HASAN AL MAMUN", phone:"01917662742", remarks:"E&CD IN CHARGE", gender:"male"},
-        {army:"2009300", rank:"SGT", name:"HOMAYUN", phone:"01769097347", remarks:"SURG WD IN CHARGE", gender:"male"},
-        {army:"2009461", rank:"SGT", name:"ABDULLAH AL MAMUN", phone:"01725340950", remarks:"W/M OFFICE", gender:"male"},
-        {army:"2009824", rank:"SGT", name:"MOSTOFA", phone:"01913385965", remarks:"CSM", gender:"male"},
-        {army:"2009890", rank:"SGT", name:"MD MAMUN OR RASHID", phone:"01721148983", remarks:"W/M OFFICE", gender:"male"},
-        {army:"2009475", rank:"CPL", name:"MD AKUL HOSSAIN", phone:"01764128559", remarks:"HDU", gender:"male"},
-        {army:"2010318", rank:"SGT", name:"ARIF", phone:"01872303600", remarks:"PHARMACY", gender:"male"},
-        {army:"2010595", rank:"CPL", name:"MD DELOWAR", phone:"01727803352", remarks:"MED WD", gender:"male"},
-        {army:"2011239", rank:"CPL", name:"ASHRAFUL", phone:"01738695454", remarks:"", gender:"male"},
-        {army:"2011021", rank:"CPL", name:"MD HABIBUR RAHMAN", phone:"01725576537", remarks:"MEDICAL STORE", gender:"male"},
-        {army:"2013918", rank:"SNK", name:"RIMON", phone:"01871951522", remarks:"T/D", gender:"male"},
-        {army:"2013981", rank:"SNK", name:"MOSAROF", phone:"01780517839", remarks:"", gender:"male"},
-        {army:"2013984", rank:"SNK", name:"RAIHAN", phone:"01964606184", remarks:"COMDT RANNAR", gender:"male"},
-        {army:"2013988", rank:"SNK", name:"FAHIM", phone:"01876445393", remarks:"", gender:"male"},
-        {army:"2014069", rank:"SNK", name:"MONIR-2", phone:"01646344328", remarks:"", gender:"male"},
-        {army:"2014098", rank:"SNK", name:"SHAWON", phone:"01794653434", remarks:"", gender:"male"},
-        {army:"2014128", rank:"SNK", name:"BIPLOB", phone:"01311887560", remarks:"COY MUNSI", gender:"male"},
-        {army:"2014175", rank:"SNK", name:"HRIDOY", phone:"01604357682", remarks:"", gender:"male"},
-        {army:"2014238", rank:"SNK", name:"JUWEL", phone:"01720350866", remarks:"", gender:"male"},
-        {army:"2014409", rank:"SNK", name:"RAKIBUL HASAN", phone:"01916880026", remarks:"TEMP ATT", gender:"male"},
-         {army:"2014626", rank:"SNK", name:"Rumman Ali", phone:"01738179995", remarks:"", gender:"male"},
-        {army:"2015468", rank:"SNK", name:"MD MARUF HOSSAIN", phone:"01763041633", remarks:"", gender:"male"},
-        {army:"2015697", rank:"SNK", name:"MD RONI ALI", phone:"01605656592", remarks:"", gender:"male"},
-        {army:"2015713", rank:"SNK", name:"SHARIFUL ISLAM", phone:"01943753516", remarks:"", gender:"male"},
-        {army:"2015721", rank:"SNK", name:"NAZMUL HUDA RABBANI", phone:"01608530441", remarks:"", gender:"male"},
-        {army:"2015730", rank:"SNK", name:"TAIJUL ISLAM", phone:"01319471596", remarks:"", gender:"male"},
-        {army:"2015808", rank:"SNK", name:"MAHBUB HOSSEN SHORDAR", phone:"01603646616", remarks:"", gender:"male"},
-        {army:"2015812", rank:"SNK", name:"ISRAFIL", phone:"01743894189", remarks:"", gender:"male"},
-        {army:"2015815", rank:"SNK", name:"WAHID ALI", phone:"01762356232", remarks:"", gender:"male"},
-        {army:"2015835", rank:"SNK", name:"SIAM SADIK SUMON", phone:"01635056692", remarks:"", gender:"male"},
-        {army:"2015849", rank:"SNK", name:"MAIDUL ISLAM", phone:"01314155512", remarks:"", gender:"male"},
-        {army:"2015929", rank:"SNK", name:"HABIBUR RAHMAN", phone:"01714596151", remarks:"", gender:"male"},
-        {army:"2000000", rank:"SNK PMA", name:"SHADHIN", phone:"01602371649", remarks:"", gender:"male"},
-        {army:"2016275", rank:"SNK", name:"MINHAJUL ISLAM", phone:"01602708954", remarks:"", gender:"male"},
-        {army:"2016334", rank:"SNK", name:"ROHIT AKONDO", phone:"01721949591", remarks:"", gender:"male"},
-        {army:"2016316", rank:"SNK", name:"SHADHATH HOSSAIN", phone:"01874152830", remarks:"", gender:"male"},
-        {army:"2016364", rank:"SNK", name:"TANVIR HOSSAIN", phone:"01894354262", remarks:"", gender:"male"},
-        {army:"2016366", rank:"SNK", name:"FORKAN ISLAM", phone:"01930134585", remarks:"", gender:"male"},
-        {army:"2016369", rank:"SNK", name:"NIAZ MAHMUD", phone:"01832076437", remarks:"", gender:"male"},
-        {army:"2016379", rank:"SNK", name:"ABU JAHER ISLAM SHAMIM", phone:"01318063096", remarks:"", gender:"male"},
-        {army:"2016416", rank:"SNK", name:"MD MAHMUDUL HAQUE", phone:"01830416642", remarks:"", gender:"male"},
-        {army:"2016458", rank:"SNK", name:"YOUSUF ALI", phone:"01956976318", remarks:"", gender:"male"},
-        {army:"2016532", rank:"SNK", name:"ASHIQUE HOSSAIN", phone:"01971978926", remarks:"", gender:"male"},
-        // Female Personnel
-        {army:"2012477", rank:"LCPL", name:"TAHMINA", phone:"01776332951", remarks:"", gender:"female"},
-        {army:"2012483", rank:"LCPL", name:"MONIRA", phone:"01632380161", remarks:"", gender:"female"},
-        {army:"2012578", rank:"LCPL", name:"PAPIA SULTANA", phone:"01706128160", remarks:"", gender:"female"},
-        {army:"2012647", rank:"LCPL", name:"NAZMUN NAHAR", phone:"01709183427", remarks:"", gender:"female"},
-        {army:"2012839", rank:"LCPL", name:"SAFINAZ", phone:"0185444059", remarks:"", gender:"female"},
-        {army:"2012848", rank:"LCPL", name:"MONIKA RANI SAHA", phone:"01709200355", remarks:"", gender:"female"},
-        {army:"2012838", rank:"LCPL", name:"TANIA", phone:"01304591367", remarks:"", gender:"female"},
-        {army:"2012810", rank:"LCPL", name:"KONA", phone:"01740764881", remarks:"", gender:"female"},
-        {army:"2012984", rank:"LCPL", name:"FATEMA", phone:"01703360560", remarks:"", gender:"female"},
-        {army:"2015692", rank:"SNK", name:"LIMA AKTER", phone:"01926860092", remarks:"", gender:"female"},
-        {army:"2015839", rank:"SNK", name:"OLIJA ISLAM MOU", phone:"01825440048", remarks:"", gender:"female"},
-        {army:"2016521", rank:"SNK", name:"TANIA SULTANA", phone:"01328982372", remarks:"", gender:"female"},
-        {army:"2016527", rank:"SNK", name:"JUTHI AKTER", phone:"01760155893", remarks:"", gender:"female"},
-        {army:"2016537", rank:"SNK", name:"SUMAYA SULTANA BIBA", phone:"0186022931", remarks:"", gender:"female"},
-        {army:"2016587", rank:"SNK", name:"JOBAIDA AKTER ROTNA", phone:"01317375952", remarks:"", gender:"female"},
-        {army:"2016576", rank:"SNK", name:"KAMONA AKTER", phone:"01311190853", remarks:"", gender:"female"}
-      ]
-    };
+  const RANK_ORDER = ["SWO","WO","SGT","CPL","LCPL","SNK","SNK PMA"];
 
-    const app = {
-      filter: function() {
-        const term = document.getElementById('search').value.toLowerCase().trim();
-        let filtered = state.data;
-        if (state.currentTab === 1) filtered = filtered.filter(c => c.gender === 'male');
-        if (state.currentTab === 2) filtered = filtered.filter(c => c.gender === 'female');
-        
-        filtered = filtered.filter(c => 
-          c.name.toLowerCase().includes(term) ||
-          c.army.toLowerCase().includes(term) ||
-          c.phone.includes(term)
-        );
-        this.render(filtered);
-      },
+  const state = { tab:"all", query:"", sort:"default" };
 
-      render: function(list) {
-        const container = document.getElementById('list');
-        let html = '';
-        const male = list.filter(c => c.gender === 'male');
-        const female = list.filter(c => c.gender === 'female');
+  const el = {
+    list: document.getElementById("list"),
+    search: document.getElementById("search"),
+    clearSearch: document.getElementById("clearSearch"),
+    sortSelect: document.getElementById("sortSelect"),
+    tabs: document.querySelectorAll('[role="tab"]'),
+    statRow: document.getElementById("statRow"),
+  };
 
-        if(male.length > 0) {
-          html += `<div class="section-title">MALE PERSONNEL (${male.length})</div>`;
-          male.forEach(c => html += this.cardTemplate(c));
-        }
-        if(female.length > 0) {
-          html += `<div class="section-title">FEMALE PERSONNEL (${female.length})</div>`;
-          female.forEach(c => html += this.cardTemplate(c));
-        }
-        container.innerHTML = html || '<p style="text-align:center; padding:30px;">No records found</p>';
-      },
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, m => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+    }[m]));
+  }
 
-      cardTemplate: function(c) {
-        return `
-          <div class="contact-card ${c.gender === 'female' ? 'card-female' : ''}">
-            <div class="name">${c.rank} ${c.name}</div>
-            <div class="info">Army No: ${c.army || 'N/A'}</div>
-            <div class="info">Mobile: ${c.phone}</div>
-            ${c.remarks.trim() ? `<div class="remarks">${c.remarks}</div>` : ''}
-            <div class="btn-group">
-              <button class="call-btn" onclick="window.location.href='tel:${c.phone}'">Call</button>
-              <button class="wa-btn" onclick="window.open('https://wa.me/88${c.phone.replace(/[^0-9]/g,'')}')">WhatsApp</button>
+  function highlight(text, term){
+    if(!term) return escapeHtml(text);
+    const idx = text.toLowerCase().indexOf(term.toLowerCase());
+    if(idx === -1) return escapeHtml(text);
+    return escapeHtml(text.slice(0, idx)) +
+      "<mark>" + escapeHtml(text.slice(idx, idx + term.length)) + "</mark>" +
+      escapeHtml(text.slice(idx + term.length));
+  }
+
+  function initials(name){
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if(parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+
+  function waLink(phone){
+    const digits = phone.replace(/[^0-9]/g, "");
+    const withCountry = digits.startsWith("880") ? digits : "88" + digits;
+    return "https://wa.me/" + withCountry;
+  }
+
+  function getFiltered(){
+    const term = state.query.trim().toLowerCase();
+    let rows = DATA.slice();
+    if(state.tab !== "all") rows = rows.filter(r => r.gender === state.tab);
+    if(term){
+      rows = rows.filter(r =>
+        r.name.toLowerCase().includes(term) ||
+        r.army.toLowerCase().includes(term) ||
+        r.phone.includes(term) ||
+        r.rank.toLowerCase().includes(term)
+      );
+    }
+    if(state.sort === "name"){
+      rows.sort((a,b) => a.name.localeCompare(b.name));
+    } else if(state.sort === "rank"){
+      rows.sort((a,b) => {
+        const ra = RANK_ORDER.indexOf(a.rank), rb = RANK_ORDER.indexOf(b.rank);
+        return (ra === -1 ? 99 : ra) - (rb === -1 ? 99 : rb) || a.name.localeCompare(b.name);
+      });
+    }
+    return rows;
+  }
+
+  function cardHtml(c){
+    const term = state.query.trim();
+    const needsVerify = c.phone.replace(/[^0-9]/g,"").length !== 11;
+    return `
+      <div class="contact-card ${c.gender}" data-army="${escapeHtml(c.army)}">
+        <div class="avatar" aria-hidden="true">${escapeHtml(initials(c.name))}</div>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="name-line">
+              <span class="rank-badge">${escapeHtml(c.rank)}</span>
+              <div class="name">${highlight(c.name, term)}</div>
             </div>
-          </div>`;
+            <button class="copy-btn" data-phone="${escapeHtml(c.phone)}" aria-label="Copy phone number for ${escapeHtml(c.name)}" title="Copy number">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+            </button>
+          </div>
+          <div class="info-row">
+            <span>Army No: <b class="mono">${highlight(c.army, term)}</b></span>
+            <span>Mobile: <b class="mono">${highlight(c.phone, term)}</b></span>
+          </div>
+          <div class="badge-row">
+            ${c.remarks.trim() ? `<span class="remarks">${escapeHtml(c.remarks)}</span>` : ""}
+            ${needsVerify ? `<span class="verify-flag">⚠ Verify number</span>` : ""}
+          </div>
+          <div class="btn-group">
+            <button class="call-btn" data-action="call" data-phone="${escapeHtml(c.phone)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
+              Call
+            </button>
+            <button class="wa-btn" data-action="wa" data-phone="${escapeHtml(c.phone)}">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.1s-.8 1-.9 1.2c-.2.2-.3.2-.6.1s-1.3-.5-2.4-1.5c-.9-.8-1.5-1.8-1.6-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.1.2-.3.3-.4.1-.2 0-.3 0-.5s-.7-1.7-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.5-.3z"/><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 18.2a8.1 8.1 0 01-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1112 20.2z"/></svg>
+              WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function render(){
+    const rows = getFiltered();
+    if(rows.length === 0){
+      el.list.innerHTML = `
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <p>No matching personnel</p>
+          <span>Try a different name, rank, or army number.</span>
+        </div>`;
+      return;
+    }
+
+    if(state.sort !== "default"){
+      el.list.innerHTML = rows.map(cardHtml).join("");
+    } else {
+      const male = rows.filter(r => r.gender === "male");
+      const female = rows.filter(r => r.gender === "female");
+      let html = "";
+      if(male.length){
+        html += `<div class="section-title male">Male Personnel · ${male.length}</div>` + male.map(cardHtml).join("");
       }
-    };
-
-    function changeTab(i) {
-      state.currentTab = i;
-      document.querySelectorAll('.tab-buttons button').forEach((b, idx) => b.classList.toggle('active', idx === i));
-      app.filter();
+      if(female.length){
+        html += `<div class="section-title female">Female Personnel · ${female.length}</div>` + female.map(cardHtml).join("");
+      }
+      el.list.innerHTML = html;
     }
+  }
 
-    function toggleAbout(show) { 
-      document.getElementById('aboutModal').style.display = show ? 'block' : 'none'; 
+  function updateStats(){
+    const male = DATA.filter(r => r.gender === "male").length;
+    const female = DATA.filter(r => r.gender === "female").length;
+    el.statRow.innerHTML = `
+      <div class="stat-pill"><b>${DATA.length}</b><span>Total</span></div>
+      <div class="stat-pill"><b>${male}</b><span>Male</span></div>
+      <div class="stat-pill"><b>${female}</b><span>Female</span></div>`;
+  }
+
+  /* ---------- Events (delegated, no inline handlers) ---------- */
+  let debounceId;
+  el.search.addEventListener("input", () => {
+    el.clearSearch.classList.toggle("show", !!el.search.value);
+    clearTimeout(debounceId);
+    debounceId = setTimeout(() => {
+      state.query = el.search.value;
+      render();
+    }, 150);
+  });
+
+  el.clearSearch.addEventListener("click", () => {
+    el.search.value = "";
+    state.query = "";
+    el.clearSearch.classList.remove("show");
+    render();
+    el.search.focus();
+  });
+
+  el.tabs.forEach(btn => {
+    btn.addEventListener("click", () => {
+      el.tabs.forEach(b => { b.classList.remove("active"); b.setAttribute("aria-selected","false"); });
+      btn.classList.add("active"); btn.setAttribute("aria-selected","true");
+      state.tab = btn.dataset.tab;
+      render();
+    });
+  });
+
+  el.sortSelect.addEventListener("change", () => {
+    state.sort = el.sortSelect.value;
+    render();
+  });
+
+  el.list.addEventListener("click", (e) => {
+    const copyBtn = e.target.closest(".copy-btn");
+    if(copyBtn){
+      const phone = copyBtn.dataset.phone;
+      navigator.clipboard?.writeText(phone).then(() => {
+        copyBtn.classList.add("copied");
+        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>`;
+        setTimeout(() => {
+          copyBtn.classList.remove("copied");
+          copyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>`;
+        }, 1400);
+      });
+      return;
     }
+    const actionBtn = e.target.closest("[data-action]");
+    if(actionBtn){
+      const phone = actionBtn.dataset.phone;
+      if(actionBtn.dataset.action === "call"){
+        window.location.href = "tel:" + phone;
+      } else {
+        window.open(waLink(phone), "_blank", "noopener");
+      }
+    }
+  });
 
-    // Initial load
-    app.render(state.data);
-  </script>
+  /* ---------- Refresh (simulated skeleton, honest about no live backend) ---------- */
+  document.getElementById("refreshBtn").addEventListener("click", () => {
+    el.list.innerHTML = Array.from({length:4}).map(() => `
+      <div class="skeleton">
+        <div class="sk-box" style="width:44px;height:44px;"></div>
+        <div style="flex:1;">
+          <div class="sk-box" style="width:60%;height:14px;margin-bottom:8px;"></div>
+          <div class="sk-box" style="width:40%;height:11px;"></div>
+        </div>
+      </div>`).join("");
+    setTimeout(render, 450);
+  });
+
+  /* ---------- About modal ---------- */
+  const modal = document.getElementById("aboutModal");
+  const aboutBtn = document.getElementById("aboutBtn");
+  let lastFocused = null;
+
+  function openModal(){
+    lastFocused = document.activeElement;
+    modal.classList.add("open");
+    document.getElementById("closeAbout").focus();
+    document.addEventListener("keydown", onModalKeydown);
+  }
+  function closeModal(){
+    modal.classList.remove("open");
+    document.removeEventListener("keydown", onModalKeydown);
+    if(lastFocused) lastFocused.focus();
+  }
+  function onModalKeydown(e){
+    if(e.key === "Escape") closeModal();
+  }
+  aboutBtn.addEventListener("click", openModal);
+  document.getElementById("closeAbout").addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+
+  /* ---------- Theme ---------- */
+  const themeToggle = document.getElementById("themeToggle");
+  const root = document.documentElement;
+  function applyTheme(t){
+    root.setAttribute("data-theme", t);
+  }
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(prefersDark ? "dark" : "light");
+  themeToggle.addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(next);
+  });
+
+  /* ---------- Init ---------- */
+  updateStats();
+  render();
+})();
+</script>
 </body>
 </html>
