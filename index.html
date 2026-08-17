@@ -180,22 +180,18 @@
   }
   .contact-card:hover{ box-shadow:var(--shadow-md); transform:translateY(-1px); }
 
-  .avatar{
-    flex:0 0 auto; width:44px; height:44px; border-radius:11px;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:800; font-size:15px; color:#fff;
+  .rank-chip{
+    flex:0 0 auto; min-width:52px; height:44px; border-radius:11px; padding:0 8px;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:'JetBrains Mono',monospace; font-weight:800; font-size:12.5px;
+    letter-spacing:.02em; color:#fff; line-height:1.15;
     background:linear-gradient(155deg, var(--steel), var(--navy-800));
   }
-  .contact-card.female .avatar{ background:linear-gradient(155deg, var(--rose-soft), var(--rose)); }
+  .contact-card.female .rank-chip{ background:linear-gradient(155deg, var(--rose-soft), var(--rose)); }
 
   .card-body{ flex:1; min-width:0; }
   .card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
   .name-line{ min-width:0; }
-  .rank-badge{
-    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
-    letter-spacing:.04em; color:var(--gold); background:rgba(201,154,61,.12);
-    border:1px solid rgba(201,154,61,.35); padding:1px 6px; border-radius:5px; margin-bottom:4px;
-  }
   .name{ font-size:15.5px; font-weight:700; color:var(--text-1); line-height:1.3; word-break:break-word; }
   mark{ background:rgba(201,154,61,.35); color:inherit; border-radius:3px; padding:0 1px; }
 
@@ -471,12 +467,6 @@
       escapeHtml(text.slice(idx + term.length));
   }
 
-  function initials(name){
-    const parts = name.trim().split(/\s+/).filter(Boolean);
-    if(parts.length === 1) return parts[0].slice(0,2).toUpperCase();
-    return (parts[0][0] + parts[1][0]).toUpperCase();
-  }
-
   function waLink(phone){
     const digits = phone.replace(/[^0-9]/g, "");
     const withCountry = digits.startsWith("880") ? digits : "88" + digits;
@@ -511,11 +501,10 @@
     const needsVerify = c.phone.replace(/[^0-9]/g,"").length !== 11;
     return `
       <div class="contact-card ${c.gender}" data-army="${escapeHtml(c.army)}">
-        <div class="avatar" aria-hidden="true">${escapeHtml(initials(c.name))}</div>
+        <div class="rank-chip" aria-hidden="true">${escapeHtml(c.rank)}</div>
         <div class="card-body">
           <div class="card-top">
             <div class="name-line">
-              <span class="rank-badge">${escapeHtml(c.rank)}</span>
               <div class="name">${highlight(c.name, term)}</div>
             </div>
             <button class="copy-btn" data-phone="${escapeHtml(c.phone)}" aria-label="Copy phone number for ${escapeHtml(c.name)}" title="Copy number">
