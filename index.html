@@ -372,7 +372,10 @@
      11 digits (e.g. Safinaz, Sumaya Sultana Biba). These are flagged
      with a "Verify" badge below rather than silently guessed at —
      please confirm with the Ward Master Office and correct at source. */
-  const DATA = [
+  // ----------------------------------------------------
+  // ৫. ওয়ান-টাইম ডাটা মাইগ্রেশন (সম্পূর্ণ ডাটাবেস)
+  // ----------------------------------------------------
+  const OLD_DATA = [
     {army:"BJO-73300", rank:"SWO", name:"Md Akram Hossain", phone:"01756192594", remarks:"SJCO", gender:"male"},
     {army:"BJO-73359", rank:"WO", name:"Md Aminul Islam", phone:"01718913391", remarks:"", gender:"male"},
     {army:"BJO-73406", rank:"WO", name:"Md Asaduzzaman Nur", phone:"01731282701", remarks:"Ward Master", gender:"male"},
@@ -439,6 +442,25 @@
     {army:"2016576", rank:"SNK", name:"Kamona Akter", phone:"01311190853", remarks:"", gender:"female"}
   ];
 
+  document.getElementById('migrateBtn').onclick = async () => {
+    if(!confirm("Are you sure you want to upload all old data? Do this only ONCE!")) return;
+    
+    document.getElementById('migrateBtn').innerText = "Uploading... Please wait";
+    document.getElementById('migrateBtn').disabled = true;
+
+    try {
+      for (const person of OLD_DATA) {
+        await addDoc(directoryRef, person);
+      }
+      alert("Migration Successful! All old data is now in Firebase.");
+      document.getElementById('migrateBtn').style.display = 'none';
+    } catch (e) {
+      alert("Error uploading: " + e.message);
+    }
+  };
+</script>
+</body>
+</html>
   const RANK_ORDER = ["SWO","WO","SGT","CPL","LCPL","SNK","SNK PMA"];
 
   const state = { tab:"all", query:"", sort:"default" };
